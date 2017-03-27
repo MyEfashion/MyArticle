@@ -1,0 +1,436 @@
+﻿/************************************************************/
+/*****              SqlDataProvider                     *****/
+/*****                                                  *****/
+/*****                                                  *****/
+/***** Note: To manually execute this script you must   *****/
+/*****       perform a search and replace operation     *****/
+/*****       for {databaseOwner} and {objectQualifier}  *****/
+/*****                                                  *****/
+/************************************************************/
+/** CREATE MyArticle Table **/
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}MyArticle]') AND type in (N'U'))
+DROP TABLE {databaseOwner}[{objectQualifier}MyArticle]
+GO
+
+
+
+
+IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}MyArticle]') and OBJECTPROPERTY(id, N'IsTable') = 1)
+	BEGIN
+		CREATE TABLE {databaseOwner}[{objectQualifier}MyArticle](
+			[ArticleId] [int] NOT NULL IDENTITY (1, 1),
+			[IsPublished] [int] NULL,
+			[IsComment] [int] NULL,
+			[Author]  [nvarchar](max) NULL,
+			[ClickCount] [int] NULL default 0,
+			[PortalId] [int] NULL,
+			[Title] [nvarchar](max) NULL,
+			[Description] [nvarchar](max) NULL,
+			[ThumbnailUrl] [nvarchar](max) NULL,
+			[Body] [nvarchar](max) NULL,
+			[CreatedOnDate] [datetime] NULL,
+			[LastModifiedOnDate] [datetime] NULL,
+			[CreatedByUserID] [int] NULL,
+			[LastModifiedByUserID] [int] NULL,
+			[ContentItemId] [int] NULL
+		 CONSTRAINT [PK_{objectQualifier}MyArticle] PRIMARY KEY CLUSTERED 
+		(
+			[ArticleId] ASC
+		)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) 
+		) 
+	
+	END
+GO
+
+
+  
+ALTER TABLE {databaseOwner}{objectQualifier}MyArticle
+	ADD CONSTRAINT FK_{objectQualifier}MyArticle_{objectQualifier}ContentItems FOREIGN KEY ( [ContentItemID] ) 
+	REFERENCES {databaseOwner}{objectQualifier}ContentItems ( [ContentItemID] ) ON DELETE CASCADE
+    ON UPDATE CASCADE 
+GO
+
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}MyArticle_spAddArticle]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}{objectQualifier}MyArticle_spAddArticle
+GO
+
+
+
+
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}MyArticle_spAddArticle
+	@Title nvarchar(MAX),
+	@PortalId int,
+	@IsPublished int,
+	@IsComment int ,
+	@Author  nvarchar(max),
+	@Body nvarchar(MAX),
+	@Description nvarchar(MAX),
+	@ThumbnailUrl nvarchar(MAX),
+	@CreatedOnDate	datetime,
+	@LastModifiedOnDate	datetime,
+	@LastModifiedByUserId int,
+	@CreatedByUserId int
+AS
+INSERT INTO {databaseOwner}{objectQualifier}MyArticle (
+	Title,
+	PortalId,
+	IsPublished,
+	IsComment,
+	Author,
+	Body,
+	Description,
+	ThumbnailUrl,
+	CreatedOnDate,
+	CreatedByUserId,
+	LastModifiedOnDate,
+	LastModifiedByUserId	
+) 
+VALUES (
+	@Title,
+	@PortalId,
+	@IsPublished,
+	@IsComment,
+	@Author,
+	@Body,
+	@Description,
+	@ThumbnailUrl,
+	@CreatedOnDate,
+	@CreatedByUserId,
+	@LastModifiedOnDate,
+	@LastModifiedByUserId
+)
+
+Select @@Identity
+GO
+
+
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}MyArticle_spUpdateArticle]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}{objectQualifier}MyArticle_spUpdateArticle
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}MyArticle_spUpdateArticle
+	@ArticleId int,
+	@Title nvarchar(MAX),
+	@IsPublished int,
+	@IsComment int,
+	@Author nvarchar(MAX),
+	@Body nvarchar(MAX),
+	@Description nvarchar(MAX),
+	@ThumbnailUrl nvarchar(MAX),
+	@LastModifiedOnDate datetime,
+	@LastModifiedByUserId int,
+	@ContentItemId int,
+	@PortalId int
+AS
+UPDATE {databaseOwner}{objectQualifier}MyArticle
+	Set 
+	Title = @Title,
+	IsPublished  = @IsPublished,
+	IsComment = @IsComment,
+	Author = @Author,
+	Body = @Body,
+	Description = @Description,
+	ThumbnailUrl = @ThumbnailUrl,
+	ContentItemId = @ContentItemId,
+	LastModifiedOnDate = @LastModifiedOnDate,
+	LastModifiedByUserId = @LastModifiedByUserId	
+WHERE
+	ArticleId = @ArticleId 
+GO
+
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}MyArticle_spUpdateClickCount]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}{objectQualifier}MyArticle_spUpdateClickCount
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}MyArticle_spUpdateClickCount
+	@ArticleId int
+AS
+UPDATE {databaseOwner}{objectQualifier}MyArticle
+
+	Set 
+
+	ClickCount = ClickCount+1
+	
+WHERE
+	ArticleId = @ArticleId 
+GO
+
+
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}MyArticle_spDeleteArticle]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}{objectQualifier}MyArticle_spDeleteArticle
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}MyArticle_spDeleteArticle
+	@ArticleId int
+AS
+DELETE FROM
+	{databaseOwner}{objectQualifier}MyArticle
+WHERE 
+	ArticleId = @ArticleId
+GO
+
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}MyArticle_spGetArticlesCount]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}{objectQualifier}MyArticle_spGetArticlesCount
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}MyArticle_spGetArticlesCount
+@PortalId int
+
+AS
+
+SELECT COUNT(*) FROM {databaseOwner}[{objectQualifier}MyArticle] 
+WHERE 
+	  PortalId = @PortalId
+GO
+
+
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}MyArticle_spGetArticle]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}{objectQualifier}MyArticle_spGetArticle
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}MyArticle_spGetArticle
+	@ArticleId int
+AS
+SELECT 
+	a.ArticleId,
+	a.Title,
+	a.IsPublished,
+	a.IsComment,
+	a.Author,
+	a.ClickCount,
+	a.Body,
+	a.Description,
+	a.ThumbnailUrl,
+	a.CreatedOnDate,
+	a.CreatedByUserId,
+	a.LastModifiedOnDate,
+	a.LastModifiedByUserId,
+	CI.ContentItemID,
+	CI.Content,
+	CI.ContentTypeID,
+	CI.TabID,
+	CI.ContentKey,
+	CI.Indexed
+FROM
+	{databaseOwner}[{objectQualifier}MyArticle] a
+	INNER JOIN {databaseOwner}{objectQualifier}ContentItems AS CI ON a.ContentItemId = CI.ContentItemID
+WHERE 
+	ArticleId = @ArticleId
+GO
+
+
+
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}MyArticle_spGetArticles]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}{objectQualifier}MyArticle_spGetArticles
+GO
+
+CREATE PROCEDURE  {databaseOwner}{objectQualifier}MyArticle_spGetArticles
+   @PageSize INT,
+   @PageIndex INT,
+   @PortalId INT,
+   @SortAsc  INT
+AS 
+   BEGIN
+       DECLARE @RowStart INT 
+       DECLARE @RowEnd INT 
+               
+       SET @RowStart = @PageSize * @PageIndex + 1 ; 
+       SET @RowEnd = @RowStart + @PageSize - 1 ; 
+       
+       SELECT  *
+       FROM    ( SELECT    
+			a.ArticleId,
+			a.Title,
+			a.IsComment,
+			a.Author,
+			a.IsPublished,
+		    a.ClickCount,
+			a.Body,
+			a.Description,
+			a.ThumbnailUrl,
+			a.CreatedOnDate,
+			a.CreatedByUserId,
+			a.LastModifiedOnDate,
+			a.LastModifiedByUserId,
+			( SELECT    TotalRecords = COUNT(*)
+                        	FROM
+					{databaseOwner}{objectQualifier}MyArticle a
+					INNER JOIN {databaseOwner}{objectQualifier}ContentItems AS CI ON a.ContentItemId = CI.ContentItemID
+				WHERE 
+					a.PortalId = @PortalId
+                        ) AS TotalRecords,
+			CI.ContentItemID,
+			CI.Content,
+			CI.ContentTypeID,
+			CI.TabiD,
+			CI.ContentKey,
+			CI.Indexed,
+			ROW_NUMBER() OVER ( 			
+			ORDER BY 
+			case when @SortAsc = 1 then a.ArticleId END ,
+			case when @SortAsc = 0 then a.ArticleId END DESC) AS RowNumber
+		FROM
+			{databaseOwner}{objectQualifier}MyArticle a
+			INNER JOIN {databaseOwner}{objectQualifier}ContentItems AS CI ON a.ContentItemId = CI.ContentItemID
+		WHERE 
+			a.PortalId = @PortalId
+
+               ) AS ArticleInfo
+       WHERE   RowNumber >= @RowStart
+               AND RowNumber <= @RowEnd 
+
+   END
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}MyArticle_spSearchArticles]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}{objectQualifier}MyArticle_spSearchArticles
+GO
+
+CREATE PROCEDURE  {databaseOwner}{objectQualifier}MyArticle_spSearchArticles
+   @PageSize INT,
+   @PageIndex INT,
+   @PortalId INT,
+   @SortAsc  INT,
+   @Title nchar(250)
+AS 
+   BEGIN
+       DECLARE @RowStart INT 
+       DECLARE @RowEnd INT 
+               
+       SET @RowStart = @PageSize * @PageIndex + 1 ; 
+       SET @RowEnd = @RowStart + @PageSize - 1 ; 
+       
+       SELECT  *
+       FROM    ( SELECT    
+			a.ArticleId,
+			a.Title,
+			a.IsPublished,
+			a.IsComment,
+			a.Author,
+			a.ClickCount,
+			a.Body,
+			a.Description,
+			a.ThumbnailUrl,
+			a.CreatedOnDate,
+			a.CreatedByUserId,
+			a.LastModifiedOnDate,
+			a.LastModifiedByUserId,
+			( SELECT    TotalRecords = COUNT(*)
+                        	FROM
+					{databaseOwner}{objectQualifier}MyArticle a
+					INNER JOIN {databaseOwner}{objectQualifier}ContentItems AS CI ON a.ContentItemId = CI.ContentItemID
+				WHERE 
+					a.Title LIKE '%['+@Title+']%' AND a.PortalId = @PortalId
+                        ) AS TotalRecords,
+			CI.ContentItemID,
+			CI.Content,
+			CI.ContentTypeID,
+			CI.TabiD,
+			CI.ContentKey,
+			CI.Indexed,
+			ROW_NUMBER() OVER ( 			
+			ORDER BY 
+			case when @SortAsc = 1 then a.ArticleId END ,
+			case when @SortAsc = 0 then a.ArticleId END DESC) AS RowNumber
+		FROM
+			{databaseOwner}{objectQualifier}MyArticle a
+			INNER JOIN {databaseOwner}{objectQualifier}ContentItems AS CI ON a.ContentItemId = CI.ContentItemID
+		WHERE 
+			a.Title LIKE '%['+@Title+']%' AND a.PortalId = @PortalId
+			
+               ) AS ArticleInfo
+       WHERE   RowNumber >= @RowStart
+               AND RowNumber <= @RowEnd 
+
+   END
+GO
+
+
+
+
+
+
+
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}MyArticle_spGetArticlesByTag]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}{objectQualifier}MyArticle_spGetArticlesByTag
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}MyArticle_spGetArticlesByTag
+   @PageSize INT,
+   @PageIndex INT,
+   @PortalId INT,
+   @SortAsc  INT,
+   @TagName nchar(250),
+   @IsPublished INT
+AS 
+   BEGIN
+       DECLARE @RowStart INT 
+       DECLARE @RowEnd INT 
+               
+       SET @RowStart = @PageSize * @PageIndex + 1 ; 
+       SET @RowEnd = @RowStart + @PageSize - 1 ; 
+       
+       SELECT  *
+       FROM    ( SELECT    
+			a.ArticleId,
+			a.Title,
+			a.IsPublished,
+						a.IsComment,
+			a.Author,
+			a.ClickCount,
+			a.Body,
+			a.Description,
+			a.ThumbnailUrl,
+			a.CreatedOnDate,
+			a.CreatedByUserId,
+			a.LastModifiedOnDate,
+			a.LastModifiedByUserId,
+			( SELECT    TotalRecords = COUNT(*)
+                        	FROM
+					{databaseOwner}{objectQualifier}MyArticle a
+					INNER JOIN {databaseOwner}{objectQualifier}ContentItems AS CI ON a.ContentItemId = CI.ContentItemID
+					INNER JOIN {databaseOwner}{objectQualifier}ContentItems_Tags AS CIT  ON CI.ContentItemID = CIT.ContentItemID
+	                INNER JOIN {databaseOwner}{objectQualifier}Taxonomy_Terms AS TT ON CIT.TermID = TT.TermID
+				WHERE 
+					a.PortalId = @PortalId AND TT.Name = @TagName AND a.IsPublished = @IsPublished
+                        ) AS TotalRecords,
+			CI.ContentItemID,
+			CI.Content,
+			CI.ContentTypeID,
+			CI.TabiD,
+			CI.ContentKey,
+			CI.Indexed,
+			ROW_NUMBER() OVER ( 			
+			ORDER BY 
+			case when @SortAsc = 1 then a.ArticleId END ,
+			case when @SortAsc = 0 then a.ArticleId END DESC) AS RowNumber
+		FROM
+			{databaseOwner}{objectQualifier}MyArticle a
+			INNER JOIN {databaseOwner}{objectQualifier}ContentItems AS CI ON a.ContentItemId = CI.ContentItemID
+	        INNER JOIN {databaseOwner}{objectQualifier}ContentItems_Tags AS CIT  ON CI.ContentItemID = CIT.ContentItemID
+	        INNER JOIN {databaseOwner}{objectQualifier}Taxonomy_Terms AS TT ON CIT.TermID = TT.TermID
+		WHERE 
+			a.PortalId = @PortalId AND TT.Name = @TagName AND a.IsPublished = @IsPublished
+
+               ) AS ArticleInfo
+       WHERE   RowNumber >= @RowStart
+               AND RowNumber <= @RowEnd 
+
+   END
+   GO
+
+
+
+/************************************************************/
+/*****              SqlDataProvider                     *****/
+/************************************************************/
