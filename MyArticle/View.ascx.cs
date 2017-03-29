@@ -71,6 +71,14 @@ namespace MyArticle
 
         }
 
+        protected void Article_ASPxGridView_CustomButtonCallback(object sender, DevExpress.Web.ASPxGridViewCustomButtonCallbackEventArgs e)
+        {
 
+        }
+
+        protected void Article_ASPxGridView_CustomCallback(object sender, DevExpress.Web.ASPxGridViewCustomCallbackEventArgs e)
+        {
+
+        }
     }
 }

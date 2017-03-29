@@ -6,7 +6,7 @@
     <tr>
         <td colspan="2">
             <div style="display: inline-block; vertical-align: bottom">
-                <dx:ASPxComboBox Height="30px" ID="Keyword_ASPxComboBox" runat="server" ValueType="System.String" Theme="Office2003Olive">             
+                <dx:ASPxComboBox Height="30px" ID="Keyword_ASPxComboBox" runat="server" ValueType="System.String" Theme="Office2003Olive">
                 </dx:ASPxComboBox>
             </div>
             <div style="display: inline-block; vertical-align: bottom">
@@ -17,29 +17,24 @@
             </div>
         </td>
         <td>
-              <dx:ASPxButton ID="AddArticle_ASPxButton" runat="server" Text="Add Article" OnClick="AddArticle_ASPxButton_Click" Theme="Office2003Olive"></dx:ASPxButton>
+            <dx:ASPxButton ID="AddArticle_ASPxButton" runat="server" Text="Add Article" OnClick="AddArticle_ASPxButton_Click" Theme="Office2003Olive"></dx:ASPxButton>
         </td>
     </tr>
-
     <tr>
         <td colspan="3">
+            <dx:ASPxGridView  ID="Article_ASPxGridView"  OnCustomCallback="Article_ASPxGridView_CustomCallback" ClientInstanceName="Article_ASPxGridView" OnCustomButtonCallback="Article_ASPxGridView_CustomButtonCallback" runat="server"  EnableTheming="True" Theme="Office2003Olive" AutoGenerateColumns="False" Width="623px">
+                <ClientSideEvents  CustomButtonClick="function(s, e) {
+	e.processOnServer = true;
+}" />
 
-            <dx:ASPxGridView ID="Article_ASPxGridView" runat="server" EnableTheming="True" Theme="Office2003Olive" AutoGenerateColumns="False" Width="623px">
+<SettingsCommandButton>
+<ShowAdaptiveDetailButton ButtonType="Image"></ShowAdaptiveDetailButton>
 
-
-                <SettingsBehavior ConfirmDelete="True" />
-
-
-                <SettingsCommandButton>
-                    <ShowAdaptiveDetailButton ButtonType="Image"></ShowAdaptiveDetailButton>
-
-                    <HideAdaptiveDetailButton ButtonType="Image"></HideAdaptiveDetailButton>
-                </SettingsCommandButton>
-
-                <SettingsDataSecurity  AllowInsert="False" />
+<HideAdaptiveDetailButton ButtonType="Image"></HideAdaptiveDetailButton>
+</SettingsCommandButton>
 
                 <Columns>
-                     <dx:GridViewDataColumn Caption="ArticleId" Name="ArticleId" FieldName="ArticleId">
+                    <dx:GridViewDataColumn Caption="ArticleId" Name="ArticleId" FieldName="ArticleId">
                     </dx:GridViewDataColumn>
                     <dx:GridViewDataColumn Name="Title" Caption="Title" FieldName="Title">
                     </dx:GridViewDataColumn>
@@ -55,27 +50,17 @@
                     </dx:GridViewDataColumn>
                     <dx:GridViewDataCheckColumn Caption="Published" VisibleIndex="7">
                     </dx:GridViewDataCheckColumn>
-                     <dx:GridViewCommandColumn Caption="Delete" ShowDeleteButton="True" VisibleIndex="8">
-                     </dx:GridViewCommandColumn>
-
-                     <dx:GridViewDataHyperLinkColumn  Caption="View"   VisibleIndex="10">
-                         <PropertiesHyperLinkEdit ClientInstanceName="View" NavigateUrlFormatString=""  NullDisplayText="View" Text="View" EnableClientSideAPI="True" Target="_blank" >
-                             <ClientSideEvents Click="function(s, e) {
-	alert('');
-}" />
-                         </PropertiesHyperLinkEdit>
-                     </dx:GridViewDataHyperLinkColumn>
-                     <dx:GridViewDataHyperLinkColumn Caption="Edit" VisibleIndex="9">
-                           <PropertiesHyperLinkEdit  NullDisplayText="Edit" Text="Edit" EnableClientSideAPI="True" >
-                             <ClientSideEvents Click="function(s, e) {
-	alert('5555');
-}" />
-                         </PropertiesHyperLinkEdit>
-                     </dx:GridViewDataHyperLinkColumn>
+                    <dx:GridViewCommandColumn Caption="Setting" VisibleIndex="8">
+                        <CustomButtons>
+                            <dx:GridViewCommandColumnCustomButton  ID="Delete_ASPxGridViewCommand" Text="Delete"></dx:GridViewCommandColumnCustomButton>
+                            <dx:GridViewCommandColumnCustomButton ID="Edit_ASPxGridViewCommand" Text="Edit"></dx:GridViewCommandColumnCustomButton>
+                            <dx:GridViewCommandColumnCustomButton ID="View_ASPxGridViewCommand" Text="View"></dx:GridViewCommandColumnCustomButton>
+                        </CustomButtons>
+                    </dx:GridViewCommandColumn>                            
+                    
                 </Columns>
-
+                
             </dx:ASPxGridView>
-
         </td>
     </tr>
 </table>

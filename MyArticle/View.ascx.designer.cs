@@ -56,5 +56,32 @@ namespace MyArticle {
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::DevExpress.Web.ASPxGridView Article_ASPxGridView;
+        
+        /// <summary>
+        /// Delete_ASPxGridViewCommand 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::DevExpress.Web.GridViewCommandColumnCustomButton Delete_ASPxGridViewCommand;
+        
+        /// <summary>
+        /// Edit_ASPxGridViewCommand 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::DevExpress.Web.GridViewCommandColumnCustomButton Edit_ASPxGridViewCommand;
+        
+        /// <summary>
+        /// View_ASPxGridViewCommand 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::DevExpress.Web.GridViewCommandColumnCustomButton View_ASPxGridViewCommand;
     }
 }
