@@ -14,69 +14,34 @@ using System.Text;
 
 namespace MyArticle
 {
-    ///<summary>
-    /// ArticleController provides the implementation of methods for our article
-    ///</summary>
+
     public static class MyArticleManager
     {
            
-        ///<summary>
-        /// Get an  article by article Id
-        ///</summary>
-        ///<param name="articleId"></param>
-        ///<returns></returns>
-        public static MyArticleItem GetArticle(int articleId)
+        public static MyArticleItem GetArticleByArtilceId(int articleId)
         {
 
-            return CBO.FillObject<MyArticleItem>(SqlDataProvider.Instance().GetArticleById(articleId));
-        }
-
-        ///<summary>
-        /// Get a list of articles by term for a portal
-        ///</summary>
-        ///<param name="portalId"></param>
-        ///<returns></returns>      
-        public static List<MyArticleItem> GetArticlesByTag(int pageSize, int pageIndex, int portalId, int sortAsc, string tagName, bool published)
+            return CBO.FillObject<MyArticleItem>(SqlDataProvider.Instance().GetArticleByArticleId(articleId));
+        }    
+        public static List<MyArticleItem> GetArticlesByTag(int pageSize, int pageIndex, int portalId, ResultSortType sort, string tag)
         {
-            return CBO.FillCollection<MyArticleItem>(SqlDataProvider.Instance().GetArticlesByTag(pageSize, pageIndex, portalId, sortAsc, tagName, published));
+            return CBO.FillCollection<MyArticleItem>(SqlDataProvider.Instance().GetArticlesByTag(pageSize, pageIndex, portalId, sort, tag));
         }
-
-        /// <summary>
-        /// Get a list of articles  for a portal
-        /// </summary>
-        /// <param name="pageSize"></param>
-        /// <param name="pageIndex"></param>
-        /// <param name="portalId"></param>
-        /// <param name="sortAsc"></param>
-        /// <returns></returns>
-        public static List<MyArticleItem> GetArticles(int pageSize, int pageIndex, int portalId, int sortAsc)
+        public static List<MyArticleItem> GetArticlesByPortalId(int pageSize, int pageIndex, int portalId, ResultSortType sort)
         {
-            return CBO.FillCollection<MyArticleItem>(SqlDataProvider.Instance().GetArticles(pageSize, pageIndex, portalId, sortAsc));
+            return CBO.FillCollection<MyArticleItem>(SqlDataProvider.Instance().GetArticlesByPortalId(pageSize, pageIndex, portalId, sort));
         }
-
-        /// <summary>
-        /// Search article by title
-        /// </summary>
-        /// <param name="pageSize"></param>
-        /// <param name="pageIndex"></param>
-        /// <param name="portalId"></param>
-        /// <param name="sortAsc"></param>
-        /// <param name="title"></param>
-        /// <returns></returns>
-        public static List<MyArticleItem> SearchArticlesByTitle(int pageSize, int pageIndex, int portalId, int sortAsc, string title)
-        {   //todo: look at caching
-            return CBO.FillCollection<MyArticleItem>(SqlDataProvider.Instance().SearchArticlesByTitle(pageSize, pageIndex, portalId, sortAsc, title));
+        public static List<MyArticleItem> GetArticlesByTitle(int pageSize, int pageIndex, int portalId, ResultSortType sort, string title)
+        {   
+            return CBO.FillCollection<MyArticleItem>(SqlDataProvider.Instance().GetArticlesByTitle(pageSize, pageIndex, portalId, sort, title));
         }
-
-
-        public static List<MyArticleItem> SearchArticlesByAuthor(int pageSize, int pageIndex, int portalId, int sortAsc, string author)
-        {   //todo: look at caching
-            return CBO.FillCollection<MyArticleItem>(SqlDataProvider.Instance().SearchArticlesByTitle(pageSize, pageIndex, portalId, sortAsc, author));
+        public static List<MyArticleItem> GetArticlesByAuthor(int pageSize, int pageIndex, int portalId, ResultSortType sort, string author)
+        {   
+            return CBO.FillCollection<MyArticleItem>(SqlDataProvider.Instance().GetArticlesByAuthor(pageSize, pageIndex, portalId, sort, author));
         }
-
-        public static List<MyArticleItem> GetArticlesByUser(int pageSize, int pageIndex, int portalId, int sortAsc, int userId)
+        public static List<MyArticleItem> GetArticlesByUserId(int pageSize, int pageIndex, int portalId, ResultSortType sort, int userId)
         {
-            return CBO.FillCollection<MyArticleItem>(SqlDataProvider.Instance().GetArticlesByUser(pageSize, pageIndex, portalId, sortAsc, userId));
+            return CBO.FillCollection<MyArticleItem>(SqlDataProvider.Instance().GetArticlesByUserId(pageSize, pageIndex, portalId, sort, userId));
 
         }
 
@@ -131,7 +96,7 @@ namespace MyArticle
         {
 
             //get the article
-            var a = GetArticle(articleId);
+            var a = GetArticleByArtilceId(articleId);
 
             var cntTaxonomy = new MyArticleContent();
             //delete the content item

@@ -18,11 +18,26 @@ namespace MyArticle
             {
                 InitBodyHtmlEditor();
                 InitThumbnailPopupWindow();
-                IsPublished_ASPxCheckBox.Checked = true;
-                IsComment_ASPxCheckBox.Checked = true;
-                Thumbnail_ASPxImage.ImageUrl = "/DesktopModules\\MyArticle\\Image\\DefaultThumbnail.jpg";
-            }
 
+                if(!string.IsNullOrEmpty(Request.QueryString["ArticleId"]))
+                {
+                    MyArticleItem a = MyArticleManager.GetArticleByArtilceId( int.Parse(Request.QueryString["ArticleID"]));
+                    Title_ASPxTextBox.Text = a.Title;
+                    Description_ASPxMemo.Text = a.Description;
+                    Author_ASPxTextBox.Text = a.Author;
+                    IsComment_ASPxCheckBox.Checked = a.IsComment;
+                    IsPublished_ASPxCheckBox.Checked = a.IsPublished;
+                    Body_ASPxHtmlEditor.Html = a.Body;
+                    Thumbnail_ASPxImage.ImageUrl = a.ThumbnailUrl;
+                }
+                else
+                {
+                    IsPublished_ASPxCheckBox.Checked = true;
+                    IsComment_ASPxCheckBox.Checked = true;
+                    Thumbnail_ASPxImage.ImageUrl = "/DesktopModules\\MyArticle\\Image\\DefaultThumbnail.jpg";
+                }
+
+            }
 
         }
 

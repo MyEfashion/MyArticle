@@ -123,4 +123,7 @@
   <data name="Keyword_ASPxComboBox_Author.Text" xml:space="preserve">
     <value>Author</value>
   </data>
+  <data name="Keyword_ASPxComboBox_User.Text" xml:space="preserve">
+    <value>User</value>
+  </data>
 </root>

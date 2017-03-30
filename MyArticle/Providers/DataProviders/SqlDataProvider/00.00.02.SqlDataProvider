@@ -230,10 +230,10 @@ GO
 
 
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}MyArticle_spGetArticles]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
-	DROP PROCEDURE {databaseOwner}{objectQualifier}MyArticle_spGetArticles
+	DROP PROCEDURE {databaseOwner}{objectQualifier}MyArticle_spGetArticlesByPortalId
 GO
 
-CREATE PROCEDURE  {databaseOwner}{objectQualifier}MyArticle_spGetArticles
+CREATE PROCEDURE  {databaseOwner}{objectQualifier}MyArticle_spGetArticlesByPortalId
    @PageSize INT,
    @PageIndex INT,
    @PortalId INT,
@@ -357,7 +357,9 @@ GO
 
 
 
-
+/************************************************************
+/*****               MyArticle_spGetArticlesByTag                      
+/************************************************************
 
 
 
@@ -369,9 +371,8 @@ CREATE PROCEDURE {databaseOwner}{objectQualifier}MyArticle_spGetArticlesByTag
    @PageSize INT,
    @PageIndex INT,
    @PortalId INT,
-   @SortAsc  INT,
-   @TagName nchar(250),
-   @IsPublished INT
+   @Sort  INT,
+   @Tag nchar(250),
 AS 
    BEGIN
        DECLARE @RowStart INT 
@@ -385,7 +386,7 @@ AS
 			a.ArticleId,
 			a.Title,
 			a.IsPublished,
-						a.IsComment,
+			a.IsComment,
 			a.Author,
 			a.ClickCount,
 			a.Body,
@@ -402,7 +403,7 @@ AS
 					INNER JOIN {databaseOwner}{objectQualifier}ContentItems_Tags AS CIT  ON CI.ContentItemID = CIT.ContentItemID
 	                INNER JOIN {databaseOwner}{objectQualifier}Taxonomy_Terms AS TT ON CIT.TermID = TT.TermID
 				WHERE 
-					a.PortalId = @PortalId AND TT.Name = @TagName AND a.IsPublished = @IsPublished
+					a.PortalId = @PortalId AND TT.Name = @Tag
                         ) AS TotalRecords,
 			CI.ContentItemID,
 			CI.Content,
@@ -412,15 +413,15 @@ AS
 			CI.Indexed,
 			ROW_NUMBER() OVER ( 			
 			ORDER BY 
-			case when @SortAsc = 1 then a.ArticleId END ,
-			case when @SortAsc = 0 then a.ArticleId END DESC) AS RowNumber
+			case when @Sort = 1 then a.ArticleId END ,
+			case when @Sort = 0 then a.ArticleId END DESC) AS RowNumber
 		FROM
 			{databaseOwner}{objectQualifier}MyArticle a
 			INNER JOIN {databaseOwner}{objectQualifier}ContentItems AS CI ON a.ContentItemId = CI.ContentItemID
 	        INNER JOIN {databaseOwner}{objectQualifier}ContentItems_Tags AS CIT  ON CI.ContentItemID = CIT.ContentItemID
 	        INNER JOIN {databaseOwner}{objectQualifier}Taxonomy_Terms AS TT ON CIT.TermID = TT.TermID
 		WHERE 
-			a.PortalId = @PortalId AND TT.Name = @TagName AND a.IsPublished = @IsPublished
+			a.PortalId = @PortalId AND TT.Name = @Tag 
 
                ) AS ArticleInfo
        WHERE   RowNumber >= @RowStart
@@ -428,6 +429,18 @@ AS
 
    END
    GO
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

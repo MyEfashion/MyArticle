@@ -18,10 +18,10 @@ namespace MyArticle
 
     public enum SearchArticleKeywordType
     {
-        Title,Author
+        Title,Author,User
     }
 
-    public enum SearchResultSortType
+    public enum ResultSortType
     {
         ASC,DESC
     }

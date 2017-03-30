@@ -83,14 +83,16 @@ namespace MyArticle
                 ArticleId = Null.SetNullInteger(dr["ArticleId"]);
                 Title = Null.SetNullString(dr["Title"]);
                 ClickCount = Null.SetNullInteger(dr["ClickCount"]);
-                IsPublished = Convert.ToBoolean(Null.SetNullInteger(dr["Published"]));
+                IsPublished = Convert.ToBoolean(Null.SetNullInteger(dr["IsPublished"]));
+                IsComment = Convert.ToBoolean(Null.SetNullInteger(dr["IsComment"]));
                 Body = Null.SetNullString(dr["Body"]);
                 CreatedByUserId = Null.SetNullInteger(dr["CreatedByUserId"]);
                 LastModifiedByUserId = Null.SetNullInteger(dr["LastModifiedByUserId"]);
                 CreatedOnDate = Null.SetNullDateTime(dr["CreatedOnDate"]);
                 LastModifiedOnDate = Null.SetNullDateTime(dr["LastModifiedOnDate"]);
                 Description = Null.SetNullString(dr["Description"]);
-                ThumbnailUrl = Null.SetNullString(dr["HeaderImageSrc"]);
+                Author = Null.SetNullString(dr["Author"]);
+                ThumbnailUrl = Null.SetNullString(dr["ThumbnailUrl"]);
                 TotalRecords = Null.SetNullInteger(dr["TotalRecords"]);
             }
             catch (Exception e)

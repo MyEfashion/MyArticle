@@ -22,16 +22,24 @@
     </tr>
     <tr>
         <td colspan="3">
-            <dx:ASPxGridView  ID="Article_ASPxGridView"  OnCustomCallback="Article_ASPxGridView_CustomCallback" ClientInstanceName="Article_ASPxGridView" OnCustomButtonCallback="Article_ASPxGridView_CustomButtonCallback" runat="server"  EnableTheming="True" Theme="Office2003Olive" AutoGenerateColumns="False" Width="623px">
-                <ClientSideEvents  CustomButtonClick="function(s, e) {
-	e.processOnServer = true;
-}" />
+            <dx:ASPxGridView OnDataBinding="Article_ASPxGridView_DataBinding" KeyFieldName="ArticleId" ID="Article_ASPxGridView" OnCustomCallback="Article_ASPxGridView_CustomCallback" ClientInstanceName="Article_ASPxGridView" OnCustomButtonCallback="Article_ASPxGridView_CustomButtonCallback" runat="server" EnableTheming="True" Theme="Office2003Olive" AutoGenerateColumns="False" Width="623px">
+                <ClientSideEvents CustomButtonClick="function(s, e) {
+                        e.processOnServer = true;
 
-<SettingsCommandButton>
-<ShowAdaptiveDetailButton ButtonType="Image"></ShowAdaptiveDetailButton>
+}"
+                    EndCallback="function(s,e)
+                    {
 
-<HideAdaptiveDetailButton ButtonType="Image"></HideAdaptiveDetailButton>
-</SettingsCommandButton>
+                    window.open(s.cpUrl,'_blank ');
+
+                    }" />
+
+                <SettingsCommandButton>
+                    <ShowAdaptiveDetailButton ButtonType="Image"></ShowAdaptiveDetailButton>
+
+                    <HideAdaptiveDetailButton ButtonType="Image"></HideAdaptiveDetailButton>
+                </SettingsCommandButton>
+                <SettingsBehavior AllowFocusedRow="true" />
 
                 <Columns>
                     <dx:GridViewDataColumn Caption="ArticleId" Name="ArticleId" FieldName="ArticleId">
@@ -48,18 +56,22 @@
                     </dx:GridViewDataColumn>
                     <dx:GridViewDataColumn Name="LastModifiedByUserId" Caption="LastModifiedByUserId" FieldName="LastModifiedByUserId">
                     </dx:GridViewDataColumn>
-                    <dx:GridViewDataCheckColumn Caption="Published" VisibleIndex="7">
+                     <dx:GridViewDataColumn Name="Author" Caption="Author" FieldName="Author">
+                    </dx:GridViewDataColumn>
+                    <dx:GridViewDataCheckColumn Caption="IsPublished" FieldName="IsPublished" >
                     </dx:GridViewDataCheckColumn>
-                    <dx:GridViewCommandColumn Caption="Setting" VisibleIndex="8">
+                     <dx:GridViewDataCheckColumn Caption="IsComment" FieldName="IsComment" >
+                    </dx:GridViewDataCheckColumn>
+                    <dx:GridViewCommandColumn Caption="Setting" >
                         <CustomButtons>
-                            <dx:GridViewCommandColumnCustomButton  ID="Delete_ASPxGridViewCommand" Text="Delete"></dx:GridViewCommandColumnCustomButton>
+                            <dx:GridViewCommandColumnCustomButton ID="Delete_ASPxGridViewCommand" Text="Delete"></dx:GridViewCommandColumnCustomButton>
                             <dx:GridViewCommandColumnCustomButton ID="Edit_ASPxGridViewCommand" Text="Edit"></dx:GridViewCommandColumnCustomButton>
                             <dx:GridViewCommandColumnCustomButton ID="View_ASPxGridViewCommand" Text="View"></dx:GridViewCommandColumnCustomButton>
                         </CustomButtons>
-                    </dx:GridViewCommandColumn>                            
-                    
+                    </dx:GridViewCommandColumn>
+
                 </Columns>
-                
+
             </dx:ASPxGridView>
         </td>
     </tr>
