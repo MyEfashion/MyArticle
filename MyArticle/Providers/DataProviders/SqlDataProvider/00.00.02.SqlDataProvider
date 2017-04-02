@@ -192,39 +192,9 @@ GO
 
 
 
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}MyArticle_spGetArticle]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
-	DROP PROCEDURE {databaseOwner}{objectQualifier}MyArticle_spGetArticle
-GO
-
-CREATE PROCEDURE {databaseOwner}{objectQualifier}MyArticle_spGetArticle
-	@ArticleId int
-AS
-SELECT 
-	a.ArticleId,
-	a.Title,
-	a.IsPublished,
-	a.IsComment,
-	a.Author,
-	a.ClickCount,
-	a.Body,
-	a.Description,
-	a.ThumbnailUrl,
-	a.CreatedOnDate,
-	a.CreatedByUserId,
-	a.LastModifiedOnDate,
-	a.LastModifiedByUserId,
-	CI.ContentItemID,
-	CI.Content,
-	CI.ContentTypeID,
-	CI.TabID,
-	CI.ContentKey,
-	CI.Indexed
-FROM
-	{databaseOwner}[{objectQualifier}MyArticle] a
-	INNER JOIN {databaseOwner}{objectQualifier}ContentItems AS CI ON a.ContentItemId = CI.ContentItemID
-WHERE 
-	ArticleId = @ArticleId
-GO
+/*****************************************************************/
+/*****               MyArticle_spGetArticlesByPortalId           *****/           
+/*****************************************************************/
 
 
 
@@ -237,7 +207,7 @@ CREATE PROCEDURE  {databaseOwner}{objectQualifier}MyArticle_spGetArticlesByPorta
    @PageSize INT,
    @PageIndex INT,
    @PortalId INT,
-   @SortAsc  INT
+   @Sort  INT
 AS 
    BEGIN
        DECLARE @RowStart INT 
@@ -276,8 +246,8 @@ AS
 			CI.Indexed,
 			ROW_NUMBER() OVER ( 			
 			ORDER BY 
-			case when @SortAsc = 1 then a.ArticleId END ,
-			case when @SortAsc = 0 then a.ArticleId END DESC) AS RowNumber
+			case when @Sort = 1 then a.ArticleId END ,
+			case when @Sort = 0 then a.ArticleId END DESC) AS RowNumber
 		FROM
 			{databaseOwner}{objectQualifier}MyArticle a
 			INNER JOIN {databaseOwner}{objectQualifier}ContentItems AS CI ON a.ContentItemId = CI.ContentItemID
@@ -291,15 +261,21 @@ AS
    END
 GO
 
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}MyArticle_spSearchArticles]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
-	DROP PROCEDURE {databaseOwner}{objectQualifier}MyArticle_spSearchArticles
+
+/*****************************************************************/
+/*****               MyArticle_spGetArticlesByTitle          *****/           
+/*****************************************************************/
+
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}MyArticle_spGetArticlesByTitle]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}{objectQualifier}MyArticle_spGetArticlesByTitle 
 GO
 
-CREATE PROCEDURE  {databaseOwner}{objectQualifier}MyArticle_spSearchArticles
+CREATE PROCEDURE  {databaseOwner}{objectQualifier}MyArticle_spGetArticlesByTitle 
    @PageSize INT,
    @PageIndex INT,
    @PortalId INT,
-   @SortAsc  INT,
+   @Sort  INT,
    @Title nchar(250)
 AS 
    BEGIN
@@ -339,8 +315,8 @@ AS
 			CI.Indexed,
 			ROW_NUMBER() OVER ( 			
 			ORDER BY 
-			case when @SortAsc = 1 then a.ArticleId END ,
-			case when @SortAsc = 0 then a.ArticleId END DESC) AS RowNumber
+			case when @Sort = 1 then a.ArticleId END ,
+			case when @Sort = 0 then a.ArticleId END DESC) AS RowNumber
 		FROM
 			{databaseOwner}{objectQualifier}MyArticle a
 			INNER JOIN {databaseOwner}{objectQualifier}ContentItems AS CI ON a.ContentItemId = CI.ContentItemID
@@ -354,12 +330,78 @@ AS
    END
 GO
 
+/*****************************************************************/
+/*****               MyArticle_spGetArticlesByAuthor           *****/          
+/*****************************************************************/
 
 
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}MyArticle_spGetArticlesByAuthor]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}{objectQualifier}MyArticle_spGetArticlesByAuthor  
+GO
 
-/************************************************************
-/*****               MyArticle_spGetArticlesByTag                      
-/************************************************************
+CREATE PROCEDURE  {databaseOwner}{objectQualifier}MyArticle_spGetArticlesByAuthor  
+   @PageSize INT,
+   @PageIndex INT,
+   @PortalId INT,
+   @Sort  INT,
+   @Author nchar(250)
+AS 
+   BEGIN
+       DECLARE @RowStart INT 
+       DECLARE @RowEnd INT 
+               
+       SET @RowStart = @PageSize * @PageIndex + 1 ; 
+       SET @RowEnd = @RowStart + @PageSize - 1 ; 
+       
+       SELECT  *
+       FROM    ( SELECT    
+			a.ArticleId,
+			a.Title,
+			a.IsPublished,
+			a.IsComment,
+			a.Author,
+			a.ClickCount,
+			a.Body,
+			a.Description,
+			a.ThumbnailUrl,
+			a.CreatedOnDate,
+			a.CreatedByUserId,
+			a.LastModifiedOnDate,
+			a.LastModifiedByUserId,
+			( SELECT    TotalRecords = COUNT(*)
+                        	FROM
+					{databaseOwner}{objectQualifier}MyArticle a
+					INNER JOIN {databaseOwner}{objectQualifier}ContentItems AS CI ON a.ContentItemId = CI.ContentItemID
+				WHERE 
+					a.Author LIKE '%['+@Author+']%' AND a.PortalId = @PortalId
+                        ) AS TotalRecords,
+			CI.ContentItemID,
+			CI.Content,
+			CI.ContentTypeID,
+			CI.TabiD,
+			CI.ContentKey,
+			CI.Indexed,
+			ROW_NUMBER() OVER ( 			
+			ORDER BY 
+			case when @Sort = 1 then a.ArticleId END ,
+			case when @Sort = 0 then a.ArticleId END DESC) AS RowNumber
+		FROM
+			{databaseOwner}{objectQualifier}MyArticle a
+			INNER JOIN {databaseOwner}{objectQualifier}ContentItems AS CI ON a.ContentItemId = CI.ContentItemID
+		WHERE 
+			a.Author LIKE '%['+@Author+']%' AND a.PortalId = @PortalId
+			
+               ) AS ArticleInfo
+       WHERE   RowNumber >= @RowStart
+               AND RowNumber <= @RowEnd 
+
+   END
+GO
+
+
+/*****************************************************************/
+/*****               MyArticle_spGetArticlesByTag                *****/      
+/*****************************************************************/
 
 
 
@@ -372,7 +414,7 @@ CREATE PROCEDURE {databaseOwner}{objectQualifier}MyArticle_spGetArticlesByTag
    @PageIndex INT,
    @PortalId INT,
    @Sort  INT,
-   @Tag nchar(250),
+   @Tag nchar(250)
 AS 
    BEGIN
        DECLARE @RowStart INT 
@@ -422,7 +464,6 @@ AS
 	        INNER JOIN {databaseOwner}{objectQualifier}Taxonomy_Terms AS TT ON CIT.TermID = TT.TermID
 		WHERE 
 			a.PortalId = @PortalId AND TT.Name = @Tag 
-
                ) AS ArticleInfo
        WHERE   RowNumber >= @RowStart
                AND RowNumber <= @RowEnd 
@@ -432,11 +473,117 @@ AS
 
 
 
+/*****************************************************************/
+/*****               MyArticle_spGetArticlesByArticleId         *****/             
+/*****************************************************************/
+
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}MyArticle_spGetArticleByArticleId]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}{objectQualifier}MyArticle_spGetArticleByArticleId
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}MyArticle_spGetArticleByArticleId
+	@ArticleId int
+AS
+SELECT 
+	a.ArticleId,
+	a.Title,
+	a.IsPublished,
+	a.IsComment,
+	a.Author,
+	a.ClickCount,
+	a.Body,
+	a.Description,
+	a.ThumbnailUrl,
+	a.CreatedOnDate,
+	a.CreatedByUserId,
+	a.LastModifiedOnDate,
+	a.LastModifiedByUserId,
+	CI.ContentItemID,
+	CI.Content,
+	CI.ContentTypeID,
+	CI.TabID,
+	CI.ContentKey,
+	CI.Indexed
+FROM
+	{databaseOwner}[{objectQualifier}MyArticle] a
+	INNER JOIN {databaseOwner}{objectQualifier}ContentItems AS CI ON a.ContentItemId = CI.ContentItemID
+WHERE 
+	ArticleId = @ArticleId
+GO
 
 
 
 
+/*****************************************************************/
+/*****               MyArticle_spGetArticlesByUserId            *****/         
+/*****************************************************************/
 
+
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}MyArticle_spGetArticlesByUserId]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	DROP PROCEDURE {databaseOwner}{objectQualifier}MyArticle_spGetArticlesByUserId
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}MyArticle_spGetArticlesByUserId
+   @PageSize INT,
+   @PageIndex INT,
+   @PortalId INT,
+   @Sort  INT,
+   @UserId INT
+AS 
+   BEGIN
+       DECLARE @RowStart INT 
+       DECLARE @RowEnd INT 
+               
+       SET @RowStart = @PageSize * @PageIndex + 1 ; 
+       SET @RowEnd = @RowStart + @PageSize - 1 ; 
+       
+       SELECT  *
+       FROM    ( SELECT    
+			a.ArticleId,
+			a.Title,
+			a.IsComment,
+			a.Author,
+			a.IsPublished,
+		    a.ClickCount,
+			a.Body,
+			a.Description,
+			a.ThumbnailUrl,
+			a.CreatedOnDate,
+			a.CreatedByUserId,
+			a.LastModifiedOnDate,
+			a.LastModifiedByUserId,
+			( SELECT    TotalRecords = COUNT(*)
+                        	FROM
+					{databaseOwner}{objectQualifier}MyArticle a
+					INNER JOIN {databaseOwner}{objectQualifier}ContentItems AS CI ON a.ContentItemId = CI.ContentItemID
+				WHERE 
+					a.PortalId = @PortalId AND a.CreatedByUserId = @UserId
+                        ) AS TotalRecords,
+			CI.ContentItemID,
+			CI.Content,
+			CI.ContentTypeID,
+			CI.TabiD,
+			CI.ContentKey,
+			CI.Indexed,
+			ROW_NUMBER() OVER ( 			
+			ORDER BY 
+			case when @Sort = 1 then a.ArticleId END ,
+			case when @Sort = 0 then a.ArticleId END DESC) AS RowNumber
+		FROM
+			{databaseOwner}{objectQualifier}MyArticle a
+			INNER JOIN {databaseOwner}{objectQualifier}ContentItems AS CI ON a.ContentItemId = CI.ContentItemID
+		WHERE 
+			a.PortalId = @PortalId AND a.CreatedByUserId = @UserId
+               ) AS ArticleInfo
+       WHERE   RowNumber >= @RowStart
+               AND RowNumber <= @RowEnd 
+
+   END
+GO
+
+  
 
 
 

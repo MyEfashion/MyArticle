@@ -61,7 +61,12 @@ namespace MyArticle
             a.LastModifiedByUserId = PortalSettings.UserId;
             a.CreatedOnDate = DateTime.Now;
             a.LastModifiedOnDate = DateTime.Now;
-            a.ThumbnailUrl = Thumbnail_ASPxHiddenField["ImageUrl"].ToString();
+
+            if (Thumbnail_ASPxHiddenField.Contains("ImageUrl"))
+            {
+                a.ThumbnailUrl = Thumbnail_ASPxHiddenField["ImageUrl"].ToString();
+            }
+           
             a.Author = Author_ASPxTextBox.Text.Trim();
 
             DevExpress.Web.ASPxCallback callBack = (DevExpress.Web.ASPxCallback)source;
@@ -94,20 +99,22 @@ namespace MyArticle
             else
             {
                 MyArticleManager.AddArticle(a, ModuleContext.TabId);
+                callBack.JSProperties.Add("cpMsg", "Save Ok");
+                e.Result = "Err";
             }              
 
         }
 
         protected void InitBodyHtmlEditor()
         {
-            Body_ASPxHtmlEditor.SettingsDialogs.InsertImageDialog.SettingsImageSelector.CommonSettings.InitialFolder = MyArticleManager.GetArticleImageUserFolder();
+            Body_ASPxHtmlEditor.SettingsDialogs.InsertImageDialog.SettingsImageSelector.CommonSettings.InitialFolder = MyArticleManager.GetArticleUserFolder();
             Body_ASPxHtmlEditor.SettingsDialogs.InsertImageDialog.SettingsImageSelector.UploadSettings.Enabled = true;
             Body_ASPxHtmlEditor.SettingsDialogs.InsertImageDialog.SettingsImageSelector.Enabled = true;
-            Body_ASPxHtmlEditor.SettingsDialogs.InsertImageDialog.SettingsImageSelector.CommonSettings.RootFolder = MyArticleManager.GetArticleImageUserFolder();
-            Body_ASPxHtmlEditor.SettingsDialogs.InsertImageDialog.SettingsImageSelector.CommonSettings.ThumbnailFolder = MyArticleManager.GetArticleImageThumbFolder();
-            Body_ASPxHtmlEditor.SettingsDialogs.InsertImageDialog.SettingsImageSelector.EditingSettings.TemporaryFolder = MyArticleManager.GetArticleImageTempFolder();
-            Body_ASPxHtmlEditor.SettingsDialogs.InsertImageDialog.SettingsImageUpload.UploadFolder = MyArticleManager.GetArticleImageUserFolder();
-            Body_ASPxHtmlEditor.SettingsDialogs.InsertImageDialog.SettingsImageUpload.AdvancedUploadModeTemporaryFolder = MyArticleManager.GetArticleImageTempFolder();
+            Body_ASPxHtmlEditor.SettingsDialogs.InsertImageDialog.SettingsImageSelector.CommonSettings.RootFolder = MyArticleManager.GetArticleUserFolder();
+            Body_ASPxHtmlEditor.SettingsDialogs.InsertImageDialog.SettingsImageSelector.CommonSettings.ThumbnailFolder = MyArticleManager.GetArticleThumbFolder();
+            Body_ASPxHtmlEditor.SettingsDialogs.InsertImageDialog.SettingsImageSelector.EditingSettings.TemporaryFolder = MyArticleManager.GetArticleTempFolder();
+            Body_ASPxHtmlEditor.SettingsDialogs.InsertImageDialog.SettingsImageUpload.UploadFolder = MyArticleManager.GetArticleUserFolder();
+            Body_ASPxHtmlEditor.SettingsDialogs.InsertImageDialog.SettingsImageUpload.AdvancedUploadModeTemporaryFolder = MyArticleManager.GetArticleTempFolder();
         }
 
         /// <summary>
@@ -124,8 +131,8 @@ namespace MyArticle
             Thumbnail_ASPxPopupControl.Width = 800;
             Thumbnail_ASPxPopupControl.Height = 400;
 
-            Thumbnail_ASPxFileManager.Settings.RootFolder = MyArticleManager.GetArticleImageUserFolder();
-            Thumbnail_ASPxFileManager.Settings.ThumbnailFolder = MyArticleManager.GetArticleImageThumbFolder();
+            Thumbnail_ASPxFileManager.Settings.RootFolder = MyArticleManager.GetArticleUserFolder();
+            Thumbnail_ASPxFileManager.Settings.ThumbnailFolder = MyArticleManager.GetArticleThumbFolder();
         
   
         }
@@ -151,7 +158,7 @@ namespace MyArticle
 
 
 
-            string newImagePath = MyArticleManager.GetArticleImageThumbFolder()  + MyArticleManager.GetMD5HashFromFile(Server.MapPath(FileManager.SelectedFile.FullName)) + FileManager.SelectedFile.Extension;
+            string newImagePath = MyArticleManager.GetArticleThumbFolder()  + MyArticleManager.GetMD5HashFromFile(Server.MapPath(FileManager.SelectedFile.FullName)) + FileManager.SelectedFile.Extension;
 
            if(!System.IO.File.Exists(Server.MapPath(newImagePath)))
             {

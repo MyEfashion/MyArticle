@@ -22,15 +22,26 @@
     </tr>
     <tr>
         <td colspan="3">
-            <dx:ASPxGridView OnDataBinding="Article_ASPxGridView_DataBinding" KeyFieldName="ArticleId" ID="Article_ASPxGridView" OnCustomCallback="Article_ASPxGridView_CustomCallback" ClientInstanceName="Article_ASPxGridView" OnCustomButtonCallback="Article_ASPxGridView_CustomButtonCallback" runat="server" EnableTheming="True" Theme="Office2003Olive" AutoGenerateColumns="False" Width="623px">
+            <dx:ASPxGridView OnDataBinding="Article_ASPxGridView_DataBinding" KeyFieldName="ArticleId" ID="Article_ASPxGridView"  ClientInstanceName="Article_ASPxGridView" OnCustomButtonCallback="Article_ASPxGridView_CustomButtonCallback" runat="server" EnableTheming="True" Theme="Office2003Olive" AutoGenerateColumns="False" Width="623px" OnPageIndexChanged="Article_ASPxGridView_PageIndexChanged">
                 <ClientSideEvents CustomButtonClick="function(s, e) {
                         e.processOnServer = true;
 
 }"
                     EndCallback="function(s,e)
                     {
-
-                    window.open(s.cpUrl,'_blank ');
+                    if(s.cpUrl)
+                    {
+                     window.open(s.cpUrl,'_blank ');
+                    }
+                    if(s.cpDeleteResult == 'OK')
+                    {
+                     alert('OK');
+                    }
+                    if(s.cpDeleteResult == 'ERROR')
+                    {
+                     alert('Error');
+                    }
+                   
 
                     }" />
 

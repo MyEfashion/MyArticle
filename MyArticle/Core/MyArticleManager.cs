@@ -201,26 +201,63 @@ namespace MyArticle
             }
         }
 
-        public static string GetArticleImageRootFolder()
+        public static string GetArticleRootFolder()
         {
-            return PortalSettings.Current.HomeDirectory + MyArticleGlobal.ArticleImageFolderName + "/";
+            string path = PortalSettings.Current.HomeDirectory + MyArticleGlobal.ArticleImageFolderName + "/";
+            if (FolderManager.Instance.FolderExists(PortalSettings.Current.PortalId, MyArticleGlobal.ArticleImageFolderName + "/"))
+            {
+                return path;
+            }
+            else
+            {
+                FolderManager.Instance.AddFolder(PortalSettings.Current.PortalId, MyArticleGlobal.ArticleImageFolderName + "/");
+                return path;
+            }
+           
         }
 
-        public static string GetArticleImageUserFolder()
+        public static string GetArticleUserFolder()
         {
-            return PortalSettings.Current.HomeDirectory + MyArticleGlobal.ArticleImageFolderName + "/" + PortalSettings.Current.UserId + "/";
+            string path = PortalSettings.Current.HomeDirectory + MyArticleGlobal.ArticleImageFolderName + "/" + PortalSettings.Current.UserId + "/";
+            if (FolderManager.Instance.FolderExists(PortalSettings.Current.PortalId, MyArticleGlobal.ArticleImageFolderName + "/" + PortalSettings.Current.UserId + "/"))
+            {
+                return path;
+            }
+            else
+            {
+                FolderManager.Instance.AddFolder(PortalSettings.Current.PortalId, MyArticleGlobal.ArticleImageFolderName + "/" + PortalSettings.Current.UserId + "/");
+                return path;
+            }
         }
 
-        public static string GetArticleImageThumbFolder()
+        public static string GetArticleThumbFolder()
         {
 
-            return PortalSettings.Current.HomeDirectory + MyArticleGlobal.ArticleImageFolderName + "/Thumb/";
+            string path = PortalSettings.Current.HomeDirectory + MyArticleGlobal.ArticleImageFolderName + "/Thumb/";
+            if (FolderManager.Instance.FolderExists(PortalSettings.Current.PortalId, MyArticleGlobal.ArticleImageFolderName + "/Thumb/"))
+            {
+                return path;
+            }
+            else
+            {
+                FolderManager.Instance.AddFolder(PortalSettings.Current.PortalId, MyArticleGlobal.ArticleImageFolderName + "/Thumb/");
+                return path;
+            }
         }
 
-        public static string GetArticleImageTempFolder()
+        public static string GetArticleTempFolder()
         {
 
-            return PortalSettings.Current.HomeDirectory + MyArticleGlobal.ArticleImageFolderName + "/Temp/";
+            string path = PortalSettings.Current.HomeDirectory + MyArticleGlobal.ArticleImageFolderName + "/Temp/";
+            if (FolderManager.Instance.FolderExists(PortalSettings.Current.PortalId, MyArticleGlobal.ArticleImageFolderName + "/Temp/"))
+            {
+                return path;
+            }
+            else
+            {
+                FolderManager.Instance.AddFolder(PortalSettings.Current.PortalId, MyArticleGlobal.ArticleImageFolderName + "/Temp/");
+                return path;
+            }
         }
 
         public static string GetMD5HashFromFile(String fileName)
@@ -250,33 +287,31 @@ namespace MyArticle
 
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        //public static IFolderInfo GetArticleFolder()
-        //{
+ 
+        public static IFolderInfo GetArticleFolder()
+        {
 
-        //    if (FolderManager.Instance.FolderExists(PortalSettings.Current.PortalId, GetArticleImageFolder()))
-        //    {
-        //        return FolderManager.Instance.GetFolder(PortalSettings.Current.PortalId, GetArticleImageFolder());
-        //    }
-        //    else
-        //    {
-        //        IFolderInfo folder = FolderManager.Instance.AddFolder(PortalSettings.Current.PortalId, GetArticleImageFolder());
+            if (FolderManager.Instance.FolderExists(PortalSettings.Current.PortalId, "" ))
+            {
+                return FolderManager.Instance.GetFolder(PortalSettings.Current.PortalId, "");
+            }
+            else
+            {
+                IFolderInfo folder = FolderManager.Instance.AddFolder(PortalSettings.Current.PortalId, "");
 
-        //        ArrayList permissionArr = PermissionController.GetPermissionsByFolder();
+                ArrayList permissionArr = PermissionController.GetPermissionsByFolder();
 
-        //        foreach (PermissionInfo permission in permissionArr)
-        //        {
-        //            FolderManager.Instance.SetFolderPermission(folder,
-        //                permission.PermissionID, RoleController.
-        //                Instance.GetRoleByName(PortalSettings.Current.PortalId, "Administrators").RoleID,
-        //                PortalSettings.Current.UserId);
-        //        }
+                foreach (PermissionInfo permission in permissionArr)
+                {
+                    FolderManager.Instance.SetFolderPermission(folder,
+                        permission.PermissionID, RoleController.
+                        Instance.GetRoleByName(PortalSettings.Current.PortalId, "Administrators").RoleID,
+                        PortalSettings.Current.UserId);
+                }
 
-        //        return folder;
-        //    }
+                return folder;
+            }
 
-        //}
+        }
     }
 }

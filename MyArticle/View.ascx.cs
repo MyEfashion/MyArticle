@@ -13,14 +13,27 @@ namespace MyArticle
 {
     public partial class View : PortalModuleBase
     {
+        private int pageSize = 10;
         protected void Page_Load(object sender, EventArgs e)
         {
-            InitSearchMenu();
+           
             if(!IsPostBack)
             {
-                int pageSize = Article_ASPxGridView.SettingsPager.PageSize;
-                Article_ASPxGridView.DataSource = MyArticleManager.GetArticlesByPortalId(pageSize * 10, 0, 0,  ResultSortType.ASC);
-                Article_ASPxGridView.DataBind();
+                if(UserInfo.IsInRole("Administrators"))
+                {
+                    InitAdminSearchMenu();
+                    pageSize = Article_ASPxGridView.SettingsPager.PageSize;
+                    Session.Add("ArticleList", MyArticleManager.GetArticlesByPortalId(pageSize * 10, 0, PortalSettings.PortalId, ResultSortType.ASC));
+                    MyArtilceDataBind();
+                }
+                else
+                {
+                    InitSearchMenu();
+                    pageSize = Article_ASPxGridView.SettingsPager.PageSize;
+                    Session.Add("ArticleList", MyArticleManager.GetArticlesByUserId(pageSize * 10, 0, PortalSettings.PortalId, ResultSortType.ASC, UserId));
+                    MyArtilceDataBind();
+                }
+              
             }
      
         }
@@ -32,19 +45,22 @@ namespace MyArticle
 
             if(keywordType == SearchArticleKeywordType.Title.ToString())
             {
-                Article_ASPxGridView.DataSource = MyArticleManager.GetArticlesByTitle(100, 0, 0, 0, keyword);
+                Session["ArticleList"] = MyArticleManager.GetArticlesByTitle(100, 0, PortalSettings.PortalId, ResultSortType.ASC, keyword);
+             
             }
             else if(keywordType == SearchArticleKeywordType.Author.ToString())
             {
-                Article_ASPxGridView.DataSource = MyArticleManager.GetArticlesByAuthor(100, 0, 0, 0, keyword);
+                Session["ArticleList"] = MyArticleManager.GetArticlesByAuthor(100, 0, PortalSettings.PortalId, ResultSortType.ASC, keyword);
+            
             }
             else if(keywordType == SearchArticleKeywordType.User.ToString())
             {
-                Article_ASPxGridView.DataSource = MyArticleManager.GetArticlesByAuthor(100, 0, 0, 0, keyword);
+                Session["ArticleList"] = MyArticleManager.GetArticlesByUserId(100, 0, PortalSettings.PortalId, ResultSortType.ASC, int.Parse(keyword));
+                
             }
 
-           
-            Article_ASPxGridView.DataBind();
+
+            MyArtilceDataBind();
         }
 
         protected void AddArticle_ASPxButton_Click(object sender, EventArgs e)
@@ -52,7 +68,7 @@ namespace MyArticle
             Response.Redirect(EditUrl("Edit"));
         }
 
-        protected void InitSearchMenu()
+        protected void InitAdminSearchMenu()
         {
             Keyword_ASPxComboBox.Items.Add( LocalizeString("Keyword_ASPxComboBox_Title"), SearchArticleKeywordType.Title);
             Keyword_ASPxComboBox.Items.Add( LocalizeString("Keyword_ASPxComboBox_Author"),SearchArticleKeywordType.Author);
@@ -60,12 +76,18 @@ namespace MyArticle
             Keyword_ASPxComboBox.SelectedIndex = 0;
 
         }
+        protected void InitSearchMenu()
+        {
+            Keyword_ASPxComboBox.Items.Add(LocalizeString("Keyword_ASPxComboBox_Title"), SearchArticleKeywordType.Title);
+            Keyword_ASPxComboBox.SelectedIndex = 0;
+        }
 
         protected void Article_ASPxGridView_CustomButtonCallback(object sender, DevExpress.Web.ASPxGridViewCustomButtonCallbackEventArgs e)
         {
             DevExpress.Web.ASPxGridView grid = (DevExpress.Web.ASPxGridView)sender;
             if(e.ButtonID == "Edit_ASPxGridViewCommand")
             {
+              
                 grid.JSProperties.Add("cpUrl", EditUrl("ArticleId", grid.GetRowValues(grid.FocusedRowIndex, "ArticleId").ToString(), "Edit"));                   
             }
             else if(e.ButtonID == "View_ASPxGridViewCommand")
@@ -74,19 +96,46 @@ namespace MyArticle
             }
             else if(e.ButtonID== "Delete_ASPxGridViewCommand")
             {
-
+                MyArticleItem a = MyArticleManager.GetArticleByArtilceId( (int) grid.GetRowValues(grid.FocusedRowIndex, "ArticleId"));
+                if(PortalSettings.UserInfo.IsSuperUser || a.CreatedByUserId == PortalSettings.UserId )
+                {
+                    MyArticleManager.DeleteArticle(int.Parse(grid.GetRowValues(grid.FocusedRowIndex, "ArticleId").ToString()));
+                    grid.JSProperties.Add("cpDeleteResult", "OK");
+                }
+                else
+                {
+                    grid.JSProperties.Add("cpDeleteResult", "ERROR");
+                }
+                
             }
         }
 
-        protected void Article_ASPxGridView_CustomCallback(object sender, DevExpress.Web.ASPxGridViewCustomCallbackEventArgs e)
-        {
-
-        }
+ 
 
         protected void Article_ASPxGridView_DataBinding(object sender, EventArgs e)
         {
             (sender as DevExpress.Web.ASPxGridView).ForceDataRowType(typeof(List<>));
+           
 
+        }
+
+        protected void Article_ASPxGridView_PageIndexChanged(object sender, EventArgs e)
+        {
+           MyArtilceDataBind();
+        }
+
+        private void MyArtilceDataBind()
+        {
+            if(Session["ArticleList"] != null)
+            {
+                Article_ASPxGridView.DataSource = (List<MyArticleItem>)Session["ArticleList"];
+                Article_ASPxGridView.DataBind();
+            }
+            else
+            {
+                
+                Session.Add("ArticleList", MyArticleManager.GetArticlesByPortalId(pageSize * 10, 0, PortalSettings.PortalId, ResultSortType.ASC));
+            }
         }
     }
 }
