@@ -49,6 +49,24 @@ namespace MyArticle {
         protected global::DevExpress.Web.ASPxTextBox Author_ASPxTextBox;
         
         /// <summary>
+        /// ASPxLabel7 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxLabel ASPxLabel7;
+        
+        /// <summary>
+        /// Terms_TermsSelector 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::DotNetNuke.Web.UI.WebControls.TermsSelector Terms_TermsSelector;
+        
+        /// <summary>
         /// ASPxLabel4 控件。
         /// </summary>
         /// <remarks>

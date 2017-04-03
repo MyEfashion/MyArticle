@@ -2,7 +2,7 @@
 <%@ Register Assembly="DevExpress.Web.ASPxHtmlEditor.v16.1, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxHtmlEditor" TagPrefix="dx" %>
 <%@ Register Assembly="DevExpress.Web.ASPxRichEdit.v16.1, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxRichEdit" TagPrefix="dx" %>
 <%@ Register Assembly="DevExpress.Web.v16.1, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web" TagPrefix="dx" %>
-
+<%@ Register TagPrefix="dnn" Namespace="DotNetNuke.Web.UI.WebControls" Assembly="DotNetNuke.Web.Deprecated" %>
 <%@ Register Assembly="DevExpress.Web.ASPxSpellChecker.v16.1, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxSpellChecker" TagPrefix="dx" %>
 
 
@@ -29,6 +29,17 @@
         <td>
             <dx:ASPxTextBox ID="Author_ASPxTextBox" MaxLength="64" runat="server" Width="300px" Theme="Youthful">
             </dx:ASPxTextBox>
+        </td>
+
+    </tr>
+
+       <tr>
+        <td>
+            <dx:ASPxLabel ID="ASPxLabel7" runat="server" Text="Tag" Theme="Youthful">
+            </dx:ASPxLabel>
+        </td>
+        <td>
+           <dnn:TermsSelector runat="server" ID="Terms_TermsSelector" ></dnn:TermsSelector>
         </td>
 
     </tr>

@@ -5,8 +5,10 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using DotNetNuke.Entities.Modules;
+using DotNetNuke.Web.UI.WebControls;
 using System.IO;
 using System.Text;
+using DotNetNuke.Entities.Content.Taxonomy;
 
 namespace MyArticle
 {
@@ -30,12 +32,13 @@ namespace MyArticle
                     Body_ASPxHtmlEditor.Html = a.Body;
                     Thumbnail_ASPxImage.ImageUrl = a.ThumbnailUrl;
                 }
-                else
-                {
+
                     IsPublished_ASPxCheckBox.Checked = true;
                     IsComment_ASPxCheckBox.Checked = true;
                     Thumbnail_ASPxImage.ImageUrl = "/DesktopModules\\MyArticle\\Image\\DefaultThumbnail.jpg";
-                }
+
+
+                Terms_TermsSelector.Terms = ModuleContext.Configuration.Terms;
 
             }
 
@@ -61,6 +64,10 @@ namespace MyArticle
             a.LastModifiedByUserId = PortalSettings.UserId;
             a.CreatedOnDate = DateTime.Now;
             a.LastModifiedOnDate = DateTime.Now;
+            a.ArticleContentItem.Terms.AddRange(Terms_TermsSelector.Terms);
+            
+           
+           
 
             if (Thumbnail_ASPxHiddenField.Contains("ImageUrl"))
             {
