@@ -14,6 +14,7 @@
     <Copy SourceFiles="View.ascx" DestinationFolder="$(DestinationPath)"/>
     <Copy SourceFiles="Admin.ascx" DestinationFolder="$(DestinationPath)"/>
     <Copy SourceFiles="Edit.ascx" DestinationFolder="$(DestinationPath)"/>
+    <Copy SourceFiles="Detail.ascx" DestinationFolder="$(DestinationPath)"/>
     <Copy SourceFiles="MyArticleScript.js" DestinationFolder="$(DestinationPath)"/>
     <Copy SourceFiles="Settings.ascx" DestinationFolder="$(DestinationPath)"/>
     <Copy SourceFiles="App_LocalResources/View.ascx.resx"  DestinationFolder="$(DestinationPath)/App_LocalResources/"></Copy>

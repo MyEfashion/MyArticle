@@ -100,25 +100,13 @@ namespace MyArticle
    
     public static class ArticleListDisplayStyle
     {
-      //public static List<KeyValuePair<string, int>> Styles
-      //  {
-      //      get
-      //      {
-      //          List<KeyValuePair<string, int>> _Styles = new List<KeyValuePair<string, int>>();
-      //          _Styles.Add( new KeyValuePair<string, int>("Title",0));
-      //          _Styles.Add(new KeyValuePair<string, int>("Title And Description", 1));
-      //          _Styles.Add(new KeyValuePair<string, int>("Title And Description And Image", 2));
-      //          return _Styles;
-      //      }
-      //  }
         public static List<string> Styles
         {
             get
             {
                 List<string> _Styles = new List<string>();
                 _Styles.Add("Title");
-                _Styles.Add("Title And Description");
-                _Styles.Add("Title And Description And Image");
+                _Styles.Add("Title And Image");
                 return _Styles;
             }
         }

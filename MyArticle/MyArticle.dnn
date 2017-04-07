@@ -92,6 +92,17 @@
                   </moduleControl>
 
                   <moduleControl>
+                    <controlKey>Detail</controlKey>
+                    <controlSrc>DesktopModules/MyArticle/Detail.ascx</controlSrc>
+                    <supportsPartialRendering>False</supportsPartialRendering>
+                    <controlType>View</controlType>
+                    <iconFile />
+                    <helpUrl />
+                    <supportsPopUps>False</supportsPopUps>
+                    <viewOrder>0</viewOrder>
+                  </moduleControl>
+
+                  <moduleControl>
                     <controlKey>Settings</controlKey>
                     <controlSrc>DesktopModules/MyArticle/Settings.ascx</controlSrc>
                     <supportsPartialRendering>False</supportsPartialRendering>

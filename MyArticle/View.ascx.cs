@@ -8,33 +8,29 @@ using DotNetNuke.Entities.Modules;
 using DotNetNuke.Entities.Modules.Actions;
 using DotNetNuke.Services.Localization;
 using DotNetNuke.Security;
+using DotNetNuke.UI.Containers;
 
 namespace MyArticle
 {
     public partial class View : PortalModuleBase, IActionable
-    {
-      
+    {     
         protected void Page_Load(object sender, EventArgs e)
         {
            
             if(!IsPostBack)
             {
                 List<MyArticleItem> articles = MyArticleManager.GetArticlesByTag(
-                    int.Parse(ModuleConfiguration.ModuleSettings["PageSize"].ToString()),
+                    int.Parse(ModuleConfiguration.ModuleSettings["PageSize"].ToString())*10,
                     0,
                     PortalId,
                     ResultSortType.ASC,
                     ModuleContext.Configuration.Terms[0].Name);
-
-                Cache.Insert("ArticlesList", articles);
-
-              
-             
+                ArticleList_ASPxDataView.SettingsTableLayout.RowsPerPage = int.Parse(ModuleConfiguration.ModuleSettings["PageSize"].ToString());
+                Cache.Insert("ArticlesList", articles);                   
             }
             MyArticleDataBind();
 
         }
-
 
         ModuleActionCollection IActionable.ModuleActions
         {
@@ -55,30 +51,16 @@ namespace MyArticle
 
         }
 
-        protected void ArticleList_ASPxDataView_PageIndexChanging(object source, DevExpress.Web.DataViewPageEventArgs e)
+        protected void ArticleList_ASPxDataView_CustomCallback(object sender, DevExpress.Web.CallbackEventArgsBase e)
         {
             MyArticleDataBind();
         }
 
         private void MyArticleDataBind()
         {
-            ArticleList_ASPxDataView.DataSource = (List<MyArticleItem>) Cache["ArticlesList"];
+            ArticleList_ASPxDataView.DataSource = (List<MyArticleItem>)Cache["ArticlesList"];
             ArticleList_ASPxDataView.DataBind();
         }
 
-        protected void ArticleList_ASPxDataView_PageIndexChanged(object sender, EventArgs e)
-        {
-            MyArticleDataBind();
-        }
-
-        protected void ArticleList_ASPxDataView_CustomCallback(object sender, DevExpress.Web.CallbackEventArgsBase e)
-        {
-            MyArticleDataBind();
-        }
-
-        protected void ArticleList_ASPxDataView_DataBinding(object sender, EventArgs e)
-        {
-            //(sender as DevExpress.Web.ASPxDataView).ForceDataRowType(typeof(List<>));
-        }
     }
 }
