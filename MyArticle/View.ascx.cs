@@ -13,25 +13,41 @@ using DotNetNuke.UI.Containers;
 namespace MyArticle
 {
     public partial class View : PortalModuleBase, IActionable
-    {     
+    {
+        private  int defaultPageSize = 10;
+        private int defaultPageTotal = 10;
+        private string defaultTermName = "";
+
         protected void Page_Load(object sender, EventArgs e)
-        {
-           
+        {         
             if(!IsPostBack)
             {
-                List<MyArticleItem> articles = MyArticleManager.GetArticlesByTag(
-                    int.Parse(ModuleConfiguration.ModuleSettings["PageSize"].ToString())*10,
-                    0,
-                    PortalId,
-                    ResultSortType.ASC,
-                    ModuleContext.Configuration.Terms[0].Name);
-                ArticleList_ASPxDataView.SettingsTableLayout.RowsPerPage = int.Parse(ModuleConfiguration.ModuleSettings["PageSize"].ToString());
-                Cache.Insert("ArticlesList", articles);                   
+                if(ModuleConfiguration.ModuleSettings.Contains("PageSize") && !string.IsNullOrEmpty(ModuleConfiguration.ModuleSettings["PageSize"].ToString()))
+                {
+                    defaultPageSize = Convert.ToInt32(ModuleConfiguration.ModuleSettings["PageSize"].ToString());
+                }
+
+                if(ModuleContext.Configuration.Terms.Count > 0)
+                {
+                    defaultTermName = ModuleContext.Configuration.Terms[0].Name;
+                }
+
+                List<MyArticleItem> articles = MyArticleManager.GetArticlesByTag(defaultPageSize * defaultPageTotal, 0, PortalId, ResultSortType.ASC, defaultTermName);
+
+                ArticleList_ASPxDataView.SettingsTableLayout.RowsPerPage = defaultPageSize;
+
+                Cache.Insert("ArticlesList" + ModuleContext.ModuleId, articles);     
+
             }
+
             MyArticleDataBind();
 
         }
 
+
+        /// <summary>
+        /// 页面命令
+        /// </summary>
         ModuleActionCollection IActionable.ModuleActions
         {
             get
@@ -39,11 +55,11 @@ namespace MyArticle
 
                 var actions = new ModuleActionCollection();
 
+                //跳转到文章管理面板
+                actions.Add(GetNextActionID(), LocalizeString("CommandAdmin"), "", "", "", EditUrl("Admin"), false, SecurityAccessLevel.Edit, true, false);
 
-                actions.Add(GetNextActionID(), "Admin", "", "", "", EditUrl("Admin"), false, SecurityAccessLevel.Edit, true, false);
-
-
-                actions.Add(GetNextActionID(), "Add Article",
+                //跳转到添加文章面板
+                actions.Add(GetNextActionID(), LocalizeString("CommandAddArticle"),
                                        "", "", "", EditUrl(), false, SecurityAccessLevel.Edit, true, false);
 
                 return actions;
@@ -51,16 +67,14 @@ namespace MyArticle
 
         }
 
-        protected void ArticleList_ASPxDataView_CustomCallback(object sender, DevExpress.Web.CallbackEventArgsBase e)
-        {
-            MyArticleDataBind();
-        }
 
         private void MyArticleDataBind()
         {
-            ArticleList_ASPxDataView.DataSource = (List<MyArticleItem>)Cache["ArticlesList"];
+            ArticleList_ASPxDataView.DataSource = (List<MyArticleItem>)Cache["ArticlesList" + ModuleContext.ModuleId];
             ArticleList_ASPxDataView.DataBind();
         }
 
     }
 }
+
+

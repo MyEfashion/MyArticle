@@ -117,64 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ControlTitle.Text" xml:space="preserve">
-    <value>Edit  Article</value>
-  </data>
-  <data name="btnCancel.Text" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="lblTerms.Text" xml:space="preserve">
-    <value>Tags</value>
-  </data>
-  <data name="lblTitle.Help" xml:space="preserve">
-    <value>Enter the article title here.</value>
-  </data>
-  <data name="lblTitle.Text" xml:space="preserve">
+  <data name="LabelTitle.Text" xml:space="preserve">
     <value>Title</value>
   </data>
-  <data name="btnSave.Text" xml:space="preserve">
-    <value>Save Article</value>
+  <data name="LabelDescription.Text" xml:space="preserve">
+    <value>Description</value>
   </data>
-  <data name="ArticleBody.Text" xml:space="preserve">
-    <value>Article Body</value>
+  <data name="LabelAuthor.Text" xml:space="preserve">
+    <value>Author</value>
   </data>
-  <data name="BasicSettings.Text" xml:space="preserve">
-    <value>Basic Settings</value>
+  <data name="LabelBody.Text" xml:space="preserve">
+    <value>Body</value>
   </data>
-  <data name="lblTerms.Help" xml:space="preserve">
-    <value>Choose Tags for this Article</value>
+  <data name="LabelIsComment.Text" xml:space="preserve">
+    <value>IsComment</value>
   </data>
-  <data name="lblEnable.Help" xml:space="preserve">
-    <value>PublishThe Article</value>
+  <data name="LabelIsPublished.Text" xml:space="preserve">
+    <value>IsPublished</value>
   </data>
-  <data name="lblEnable.Text" xml:space="preserve">
-    <value>Published</value>
+  <data name="LabelTag.Text" xml:space="preserve">
+    <value>Tag</value>
   </data>
-  <data name="ArticleDescription.Text" xml:space="preserve">
-    <value>Article Description</value>
-  </data>
-  <data name="lblArticleDescription.Help" xml:space="preserve">
-    <value>Article Description</value>
-  </data>
-  <data name="lblArticleDescription.Text" xml:space="preserve">
-    <value>Article Description</value>
-  </data>
-  <data name="lblImage.Help" xml:space="preserve">
-    <value>Image</value>
-  </data>
-  <data name="lblImage.Text" xml:space="preserve">
-    <value>Image</value>
-  </data>
-  <data name="DropFileLabel.Text" xml:space="preserve">
-    <value>DropFile</value>
-  </data>
-  <data name="FileLabel.Text" xml:space="preserve">
-    <value>File</value>
-  </data>
-  <data name="FolderLabel.Text" xml:space="preserve">
-    <value>Folder</value>
-  </data>
-  <data name="UploadFileLabel.Text" xml:space="preserve">
-    <value>UploadFile</value>
+  <data name="LabelThumbnail.Text" xml:space="preserve">
+    <value>Thumbnail</value>
   </data>
 </root>

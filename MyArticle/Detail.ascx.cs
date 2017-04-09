@@ -13,14 +13,25 @@ namespace MyArticle
 {
     public partial class Detail : PortalModuleBase
     {
+       
         protected void Page_Load(object sender, EventArgs e)
         {
+             
             if(!string.IsNullOrEmpty(Request.QueryString["ArticleId"]))
             {
                 MyArticleItem a = MyArticleManager.GetArticleByArtilceId(int.Parse(Request.QueryString["ArticleId"]));
                 Title_Literal.Text = a.Title;
                 Body_Literal.Text = a.Body;
-               
+                MyArticleManager.AddClickCount(a.ArticleId);
+
+                //是否显示评论
+                if(a.IsComment)
+                {
+                    Response.Write( "<script type='text/javascript' src='http://v2.uyan.cc/code/uyan.js'></script>");        
+                    
+                }
+
+                              
             }
         }
     }

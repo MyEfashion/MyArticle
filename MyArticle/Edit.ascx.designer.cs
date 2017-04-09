@@ -13,13 +13,13 @@ namespace MyArticle {
     public partial class Edit {
         
         /// <summary>
-        /// ASPxLabel1 控件。
+        /// Title_ASPxLabel 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::DevExpress.Web.ASPxLabel ASPxLabel1;
+        protected global::DevExpress.Web.ASPxLabel Title_ASPxLabel;
         
         /// <summary>
         /// Title_ASPxTextBox 控件。
@@ -31,13 +31,13 @@ namespace MyArticle {
         protected global::DevExpress.Web.ASPxTextBox Title_ASPxTextBox;
         
         /// <summary>
-        /// ASPxLabel5 控件。
+        /// Author_ASPxLabel 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::DevExpress.Web.ASPxLabel ASPxLabel5;
+        protected global::DevExpress.Web.ASPxLabel Author_ASPxLabel;
         
         /// <summary>
         /// Author_ASPxTextBox 控件。
@@ -49,13 +49,13 @@ namespace MyArticle {
         protected global::DevExpress.Web.ASPxTextBox Author_ASPxTextBox;
         
         /// <summary>
-        /// ASPxLabel7 控件。
+        /// Tag_ASPxLabel 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::DevExpress.Web.ASPxLabel ASPxLabel7;
+        protected global::DevExpress.Web.ASPxLabel Tag_ASPxLabel;
         
         /// <summary>
         /// Terms_TermsSelector 控件。
@@ -67,13 +67,13 @@ namespace MyArticle {
         protected global::DotNetNuke.Web.UI.WebControls.TermsSelector Terms_TermsSelector;
         
         /// <summary>
-        /// ASPxLabel4 控件。
+        /// IsPublished_ASPxLabel 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::DevExpress.Web.ASPxLabel ASPxLabel4;
+        protected global::DevExpress.Web.ASPxLabel IsPublished_ASPxLabel;
         
         /// <summary>
         /// IsPublished_ASPxCheckBox 控件。
@@ -85,13 +85,13 @@ namespace MyArticle {
         protected global::DevExpress.Web.ASPxCheckBox IsPublished_ASPxCheckBox;
         
         /// <summary>
-        /// ASPxLabel6 控件。
+        /// IsComment_ASPxLabel 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::DevExpress.Web.ASPxLabel ASPxLabel6;
+        protected global::DevExpress.Web.ASPxLabel IsComment_ASPxLabel;
         
         /// <summary>
         /// IsComment_ASPxCheckBox 控件。
@@ -103,13 +103,13 @@ namespace MyArticle {
         protected global::DevExpress.Web.ASPxCheckBox IsComment_ASPxCheckBox;
         
         /// <summary>
-        /// ASPxLabel2 控件。
+        /// Description_ASPxLabel 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::DevExpress.Web.ASPxLabel ASPxLabel2;
+        protected global::DevExpress.Web.ASPxLabel Description_ASPxLabel;
         
         /// <summary>
         /// Description_ASPxMemo 控件。
@@ -119,6 +119,15 @@ namespace MyArticle {
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::DevExpress.Web.ASPxMemo Description_ASPxMemo;
+        
+        /// <summary>
+        /// Thumbnail_ASPxLabel 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxLabel Thumbnail_ASPxLabel;
         
         /// <summary>
         /// Thumbnail_ASPxHiddenField 控件。
@@ -139,13 +148,13 @@ namespace MyArticle {
         protected global::DevExpress.Web.ASPxImage Thumbnail_ASPxImage;
         
         /// <summary>
-        /// ASPxLabel3 控件。
+        /// Body_ASPxLabel 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::DevExpress.Web.ASPxLabel ASPxLabel3;
+        protected global::DevExpress.Web.ASPxLabel Body_ASPxLabel;
         
         /// <summary>
         /// Body_ASPxHtmlEditor 控件。

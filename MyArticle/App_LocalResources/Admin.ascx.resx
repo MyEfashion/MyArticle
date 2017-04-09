@@ -117,40 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddItem.Text" xml:space="preserve">
-    <value>Add New Item</value>
+  <data name="Keyword_ASPxComboBox_Title.Text" xml:space="preserve">
+    <value>Title</value>
   </data>
-  <data name="BasicSettings.Text" xml:space="preserve">
-    <value>MyArticleUI Item Basic Settings</value>
+  <data name="Keyword_ASPxComboBox_Author.Text" xml:space="preserve">
+    <value>Author</value>
   </data>
-  <data name="Cancel.Text" xml:space="preserve">
-    <value>Cancel</value>
+  <data name="Keyword_ASPxComboBox_User.Text" xml:space="preserve">
+    <value>User</value>
   </data>
-  <data name="CollapseAll.Text" xml:space="preserve">
-    <value>Collapse All</value>
+  <data name="btnEdit.Text" xml:space="preserve">
+    <value>Edit Article</value>
   </data>
-  <data name="DeleteItem.Text" xml:space="preserve">
-    <value>Delete</value>
+  <data name="ClickCount.Text" xml:space="preserve">
+    <value>ClickCount</value>
   </data>
-  <data name="EditItem.Text" xml:space="preserve">
-    <value>Edit</value>
+  <data name="ConfirmDelete.Text" xml:space="preserve">
+    <value>Confirm Delete The Article</value>
   </data>
-  <data name="ExpandAll.Text" xml:space="preserve">
-    <value>Expand All</value>
+  <data name="DeletePermission.Text" xml:space="preserve">
+    <value>You do not have the permission to delete the article !</value>
   </data>
-  <data name="lblAssignedUser.Text" xml:space="preserve">
-    <value>Assigned User</value>
-  </data>
-  <data name="lblDescription.Text" xml:space="preserve">
-    <value>Description</value>
-  </data>
-  <data name="lblName.Text" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="Submit.Text" xml:space="preserve">
-    <value>Save</value>
-  </data>
-  <data name="NoItems.Text" xml:space="preserve">
-    <value>No items defined.</value>
+  <data name="EditPermission.Text" xml:space="preserve">
+    <value>You do not have the permissin to edit the article !</value>
   </data>
 </root>

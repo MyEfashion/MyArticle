@@ -117,13 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Keyword_ASPxComboBox_Title.Text" xml:space="preserve">
-    <value>Title</value>
+  <data name="CommandAddArticle.Text" xml:space="preserve">
+    <value>Add Article</value>
   </data>
-  <data name="Keyword_ASPxComboBox_Author.Text" xml:space="preserve">
-    <value>Author</value>
+  <data name="CommandAdmin.Text" xml:space="preserve">
+    <value>Admin</value>
   </data>
-  <data name="Keyword_ASPxComboBox_User.Text" xml:space="preserve">
-    <value>User</value>
+  <data name="." xml:space="preserve">
+    <value />
   </data>
 </root>

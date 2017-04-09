@@ -7,8 +7,8 @@ namespace MyArticle
 {
     public class MyArticleGlobal
     {
-        public static int ArticleTitleMaxLength = 64;
-        public static int ArticleAuthorMaxLength = 32;
+        public static int ArticleTitleMaxLength = 32;
+        public static int ArticleAuthorMaxLength = 16;
         public static int ArticleDescriptionMaxLength = 128;
         public static string ArticleImageFolderName = "MyArticle";
         public static string UploadFileFilter = "bmp,gif,jpeg,jpg,jpe,png";

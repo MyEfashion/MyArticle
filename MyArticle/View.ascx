@@ -4,28 +4,37 @@
 
 
 
-<dx:ASPxDataView ID="ArticleList_ASPxDataView" runat="server" EnableTheming="True" Theme="Default"  OnCustomCallback="ArticleList_ASPxDataView_CustomCallback" >
-    <SettingsTableLayout ColumnCount="1" RowsPerPage="10" />
+<dx:ASPxDataView ID="ArticleList_ASPxDataView"
+     runat="server"
+     EnableTheming="True"
+     Theme="Default" >
+    <SettingsTableLayout ColumnCount="1" />
     <ItemTemplate>
-        <div style="height: 80px; width: 120px; line-height: 80px; float: left; margin-right: 10px">
-            <dx:ASPxImage runat="server" ImageUrl='<%# DataBinder.Eval(Container.DataItem,"ThumbnailUrl") %>'></dx:ASPxImage>
-
-        </div>
-        <div style="height: 80px; float: left">
-            <div style="height: 40px">
-                <h3>
+        <div >
+                <h6>
                     <asp:HyperLink runat="server" NavigateUrl='<%# EditUrl("ArticleId",DataBinder.Eval(Container.DataItem,"ArticleId").ToString(),"Detail")%>'>
                           <%# DataBinder.Eval(Container.DataItem,"Title")%>
-
                     </asp:HyperLink>
-                </h3>
+                </h6>
             </div>
-            <div style="height: 30px">
-            </div>
+
+        <div>
+            <dx:ASPxImage Width="64px" Height="64px" runat="server" ImageUrl='<%# DataBinder.Eval(Container.DataItem,"ThumbnailUrl") %>'></dx:ASPxImage>
+            <label>
+                  <%# DataBinder.Eval(Container.DataItem,"Description")%>
+            </label>
         </div>
+
+        <div>
+           <label style="color:darkblue"> <%# DataBinder.Eval(Container.DataItem,"Author")%> </label> 
+            发布于  <%# DataBinder.Eval(Container.DataItem,"CreatedOnDate")%>
+            点击(<%# DataBinder.Eval(Container.DataItem,"ClickCount")%>)
+        </div>
+       
+  
     </ItemTemplate>
     <PagerSettings ShowNumericButtons="False" Position="Bottom"></PagerSettings>
-    <ItemStyle Paddings-Padding="0px" Border-BorderWidth="0px" Height="80px" Width="500px" />
+    <ItemStyle  Border-BorderWidth="0px"  Width="800px" Height="100px" />
     
 </dx:ASPxDataView>
 

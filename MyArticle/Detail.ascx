@@ -23,3 +23,11 @@
 <div class="Detail_Body">
     <asp:Literal ID="Body_Literal" runat="server"></asp:Literal>
 </div>
+
+<br />
+<br />
+<br />
+
+<div id="uyan_frame" >
+
+</div >

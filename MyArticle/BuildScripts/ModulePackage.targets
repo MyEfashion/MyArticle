@@ -11,6 +11,7 @@
       <DestinationPath>D:/Spirit/DesktopModules/MyArticle</DestinationPath>
     </PropertyGroup>
     
+ 
     <Copy SourceFiles="View.ascx" DestinationFolder="$(DestinationPath)"/>
     <Copy SourceFiles="Admin.ascx" DestinationFolder="$(DestinationPath)"/>
     <Copy SourceFiles="Edit.ascx" DestinationFolder="$(DestinationPath)"/>
@@ -18,6 +19,8 @@
     <Copy SourceFiles="MyArticleScript.js" DestinationFolder="$(DestinationPath)"/>
     <Copy SourceFiles="Settings.ascx" DestinationFolder="$(DestinationPath)"/>
     <Copy SourceFiles="App_LocalResources/View.ascx.resx"  DestinationFolder="$(DestinationPath)/App_LocalResources/"></Copy>
+    <Copy SourceFiles="App_LocalResources/Edit.ascx.resx" DestinationFolder="$(DestinationPath)/App_LocalResources/"/>
+    <Copy SourceFiles="App_LocalResources/Admin.ascx.resx" DestinationFolder="$(DestinationPath)/App_LocalResources/"/>
 
     <Copy SourceFiles="bin/MyArticle.dll" DestinationFolder="$(DestinationPath)/../../bin"/>
   </Target>

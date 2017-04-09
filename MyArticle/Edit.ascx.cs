@@ -9,6 +9,7 @@ using DotNetNuke.Web.UI.WebControls;
 using System.IO;
 using System.Text;
 using DotNetNuke.Entities.Content.Taxonomy;
+using DevExpress.Web;
 
 namespace MyArticle
 {
@@ -18,6 +19,18 @@ namespace MyArticle
         {
             if(!IsPostBack)
             {
+                Title_ASPxLabel.Text = LocalizeString("LabelTitle");
+                Author_ASPxLabel.Text = LocalizeString("LabelAuthor");
+                Tag_ASPxLabel.Text = LocalizeString("LabelTag");
+                IsPublished_ASPxLabel.Text = LocalizeString("LabelIsPublished");
+                IsComment_ASPxLabel.Text = LocalizeString("LabelIsComment");
+                Thumbnail_ASPxLabel.Text = LocalizeString("LabelThumbnail");
+                Description_ASPxLabel.Text = LocalizeString("LabelDescription");
+                Thumbnail_ASPxLabel.Text = LocalizeString("LabelThumbnail");
+                Body_ASPxLabel.Text = LocalizeString("LabelBody");
+
+
+
                 InitBodyHtmlEditor();
                 InitThumbnailPopupWindow();
 
@@ -39,6 +52,7 @@ namespace MyArticle
 
 
                 Terms_TermsSelector.Terms = ModuleContext.Configuration.Terms;
+             
 
             }
 
@@ -53,6 +67,11 @@ namespace MyArticle
         protected void SaveArticle_ASPxCallback_Callback(object source, DevExpress.Web.CallbackEventArgs e)
         {
             MyArticleItem a = new MyArticleItem();
+
+            if (!string.IsNullOrEmpty(Request.QueryString["ArticleId"]))
+            {
+                a = MyArticleManager.GetArticleByArtilceId(int.Parse(Request.QueryString["ArticleId"]));
+            }
 
             a.Title = Title_ASPxTextBox.Text.Trim();
             a.Description = Description_ASPxMemo.Text.Trim();
@@ -72,6 +91,10 @@ namespace MyArticle
             if (Thumbnail_ASPxHiddenField.Contains("ImageUrl"))
             {
                 a.ThumbnailUrl = Thumbnail_ASPxHiddenField["ImageUrl"].ToString();
+            }
+            else
+            {
+                a.ThumbnailUrl = Thumbnail_ASPxImage.ImageUrl;
             }
            
             a.Author = Author_ASPxTextBox.Text.Trim();
@@ -103,8 +126,17 @@ namespace MyArticle
                 e.Result = "Err";
                 return;
             }
+            else if(!string.IsNullOrEmpty(Request.QueryString["ArticleId"]))
+            {
+
+                MyArticleManager.UpdateArticle(a, ModuleContext.TabId);
+               
+                callBack.JSProperties.Add("cpMsg", "Save Ok");
+                e.Result = "Err";
+            }
             else
             {
+
                 MyArticleManager.AddArticle(a, ModuleContext.TabId);
                 callBack.JSProperties.Add("cpMsg", "Save Ok");
                 e.Result = "Err";
@@ -140,6 +172,10 @@ namespace MyArticle
 
             Thumbnail_ASPxFileManager.Settings.RootFolder = MyArticleManager.GetArticleUserFolder();
             Thumbnail_ASPxFileManager.Settings.ThumbnailFolder = MyArticleManager.GetArticleThumbFolder();
+
+            //显示上传按钮
+            Thumbnail_ASPxFileManager.SettingsContextMenu.Items.Add(new FileManagerToolbarUploadButton());
+          
         
   
         }

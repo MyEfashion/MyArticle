@@ -11,7 +11,7 @@
 <table style="border-collapse: separate; border-spacing: 10px;">
     <tr>
         <td>
-            <dx:ASPxLabel ID="ASPxLabel1" runat="server" Text="Title" Theme="Youthful">
+            <dx:ASPxLabel ID="Title_ASPxLabel" runat="server"  Theme="Youthful">
             </dx:ASPxLabel>
         </td>
         <td>
@@ -23,7 +23,7 @@
 
     <tr>
         <td>
-            <dx:ASPxLabel ID="ASPxLabel5" runat="server" Text="Author" Theme="Youthful">
+            <dx:ASPxLabel ID="Author_ASPxLabel" runat="server"  Theme="Youthful">
             </dx:ASPxLabel>
         </td>
         <td>
@@ -35,7 +35,7 @@
 
        <tr>
         <td>
-            <dx:ASPxLabel ID="ASPxLabel7" runat="server" Text="Tag" Theme="Youthful">
+            <dx:ASPxLabel ID="Tag_ASPxLabel" runat="server"  Theme="Youthful">
             </dx:ASPxLabel>
         </td>
         <td>
@@ -46,7 +46,7 @@
 
     <tr>
         <td>
-            <dx:ASPxLabel ID="ASPxLabel4" runat="server" Text="IsPiblished" Theme="Youthful">
+            <dx:ASPxLabel ID="IsPublished_ASPxLabel" runat="server"  Theme="Youthful">
             </dx:ASPxLabel>
 
         </td>
@@ -58,7 +58,7 @@
 
     <tr>
         <td>
-            <dx:ASPxLabel ID="ASPxLabel6" runat="server" Text="IsComment" Theme="Youthful">
+            <dx:ASPxLabel ID="IsComment_ASPxLabel" runat="server"  Theme="Youthful">
             </dx:ASPxLabel>
 
         </td>
@@ -70,18 +70,21 @@
 
     <tr>
         <td>
-            <dx:ASPxLabel ID="ASPxLabel2" runat="server" Text="Description" Theme="Youthful">
+            <dx:ASPxLabel ID="Description_ASPxLabel" runat="server"  Theme="Youthful">
             </dx:ASPxLabel>
         </td>
         <td>
-            <dx:ASPxMemo ID="Description_ASPxMemo" runat="server" Width="300px" EnableTheming="True" Theme="Youthful" MaxLength="128" Height="100px">
+            <dx:ASPxMemo  ID="Description_ASPxMemo" runat="server" Width="300px" EnableTheming="True" Theme="Youthful" MaxLength="128" Rows="5">
+               
             </dx:ASPxMemo>
         </td>
 
     </tr>
 
     <tr>
-        <td>Thumbnail</td>
+        <td>
+            <dx:ASPxLabel ID="Thumbnail_ASPxLabel" runat="server"  Theme="Youthful"></dx:ASPxLabel>
+        </td>
         <td>
             <dx:ASPxHiddenField ID="Thumbnail_ASPxHiddenField"  ClientInstanceName="Thumbnail_ASPxHiddenField" runat="server"></dx:ASPxHiddenField>
             <dx:ASPxImage   ID="Thumbnail_ASPxImage" ClientInstanceName="Thumbnail_ASPxImage" Width="100px" Height="100px" runat="server"  Cursor="pointer">
@@ -96,7 +99,7 @@
 
     <tr>
         <td>
-            <dx:ASPxLabel ID="ASPxLabel3" runat="server" Text="Body" Theme="Youthful">
+            <dx:ASPxLabel ID="Body_ASPxLabel" runat="server" Text="Body" Theme="Youthful">
             </dx:ASPxLabel>
         </td>
         <td>
@@ -135,8 +138,8 @@
                                 </dx:FileManagerToolbarCustomButton>
                             </Items>
                         </SettingsToolbar>
-                        <SettingsUpload Enabled="False">
-                        </SettingsUpload>
+                      
+                     
                         <ClientSideEvents CustomCommand="function(s, e) { 
                                                    
                              var win = Thumbnail_ASPxPopupControl.windows[0];
@@ -148,6 +151,12 @@
                              Thumbnail_ASPxHiddenField.Add('ImageUrl', s.cpResult)
                             
 	                         }" />
+                        <SettingsContextMenu>
+                            <Items>
+                                <dx:FileManagerToolbarCustomButton Text="Select">
+                                </dx:FileManagerToolbarCustomButton>
+                            </Items>
+                        </SettingsContextMenu>
                     </dx:ASPxFileManager>
                 </dx:PopupControlContentControl>
             </ContentCollection>
@@ -166,3 +175,24 @@
 </dx:ASPxCallback>
 
 
+<script type="text/javascript">
+
+    function ValidateArticleInfo(title, author, description, body)
+    {
+        if(title.length < 1 || title.length > 32)
+        {
+            alert("title error")
+        }
+        else if(author.length < 1 || author.length > 16)
+        {
+            aler("author error")
+        }
+        else if (description.length < 1 || description.length > 128) {
+            aler("description error")
+        }
+        else if (body.length < 1) {
+            aler("body error")
+        }
+    }
+
+</script>

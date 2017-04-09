@@ -45,6 +45,16 @@ namespace MyArticle
 
         }
 
+        public static List<MyArticleItem> GetArticlesByLastModifiedOnDate(int pageSize,int pageIndex,int portalId, ResultSortType sort,DateTime start,DateTime end)
+        {
+            return CBO.FillCollection<MyArticleItem>(SqlDataProvider.Instance().GetArticlesByLastModifiedOnDate(pageSize,  pageIndex,  portalId,  sort,  start,  end));
+        }
+
+        public static List<MyArticleItem> GetArticlesByCreatedOnDate(int pageSize, int pageIndex, int portalId, ResultSortType sort, DateTime start, DateTime end)
+        {
+            return CBO.FillCollection<MyArticleItem>(SqlDataProvider.Instance().GetArticlesByCreatedOnDate(pageSize, pageIndex, portalId, sort, start, end));
+        }
+
         ///<summary>
         /// Add a article
         ///</summary>
