@@ -38,7 +38,7 @@ namespace MyArticle
                 {
                     MyArticleItem a = MyArticleManager.GetArticleByArtilceId( int.Parse(Request.QueryString["ArticleID"]));
                     Title_ASPxTextBox.Text = a.Title;
-                    Description_ASPxMemo.Text = a.Description;
+                    Description_ASPxTextBox.Text = a.Description;
                     Author_ASPxTextBox.Text = a.Author;
                     IsComment_ASPxCheckBox.Checked = a.IsComment;
                     IsPublished_ASPxCheckBox.Checked = a.IsPublished;
@@ -74,7 +74,7 @@ namespace MyArticle
             }
 
             a.Title = Title_ASPxTextBox.Text.Trim();
-            a.Description = Description_ASPxMemo.Text.Trim();
+            a.Description = Description_ASPxTextBox.Text.Trim();
             a.Body = Body_ASPxHtmlEditor.Html.Trim();
             a.IsPublished = IsPublished_ASPxCheckBox.Checked;
             a.IsComment = IsComment_ASPxCheckBox.Checked;

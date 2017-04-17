@@ -22,12 +22,28 @@ namespace MyArticle
         {         
             if(!IsPostBack)
             {
-                if(ModuleConfiguration.ModuleSettings.Contains("PageSize") && !string.IsNullOrEmpty(ModuleConfiguration.ModuleSettings["PageSize"].ToString()))
+
+
+                if (ModuleConfiguration.ModuleSettings.Contains("PageSize") && !string.IsNullOrEmpty(ModuleConfiguration.ModuleSettings["PageSize"].ToString()))
                 {
                     defaultPageSize = Convert.ToInt32(ModuleConfiguration.ModuleSettings["PageSize"].ToString());
                 }
 
-                if(ModuleContext.Configuration.Terms.Count > 0)
+                if (ModuleConfiguration.ModuleSettings.Contains("DisplayStyle") && !string.IsNullOrEmpty(ModuleConfiguration.ModuleSettings["DisplayStyle"].ToString()))
+                {
+                    int style = Convert.ToInt32(ModuleConfiguration.ModuleSettings["DisplayStyle"].ToString());
+
+                    if (style == 0)
+                    {
+                        ArticleList_ASPxDataView.ItemTemplate = Page.LoadTemplate("DesktopModules/MyArticle/Template/OnlyShowTitle.ascx");
+                     }
+                    else
+                    {
+                        ArticleList_ASPxDataView.ItemTemplate = Page.LoadTemplate("DesktopModules/MyArticle/Template/ShowTitleAndThumbneil.ascx");
+                    }
+                }
+
+                if (ModuleContext.Configuration.Terms.Count > 0)
                 {
                     defaultTermName = ModuleContext.Configuration.Terms[0].Name;
                 }
@@ -72,6 +88,7 @@ namespace MyArticle
         {
             ArticleList_ASPxDataView.DataSource = (List<MyArticleItem>)Cache["ArticlesList" + ModuleContext.ModuleId];
             ArticleList_ASPxDataView.DataBind();
+            
         }
 
     }

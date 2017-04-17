@@ -111,6 +111,8 @@
   <ItemGroup>
     <Content Include="Image\MyArticleLogo.jpg" />
     <Content Include="Settings.ascx" />
+    <Content Include="Template\OnlyShowTitle.ascx" />
+    <Content Include="Template\ShowTitleAndThumbneil.ascx" />
     <Content Include="View.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -152,6 +154,20 @@
     </Compile>
     <Compile Include="Settings.ascx.designer.cs">
       <DependentUpon>Settings.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Template\OnlyShowTitle.ascx.cs">
+      <DependentUpon>OnlyShowTitle.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Template\OnlyShowTitle.ascx.designer.cs">
+      <DependentUpon>OnlyShowTitle.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Template\ShowTitleAndThumbneil.ascx.cs">
+      <DependentUpon>ShowTitleAndThumbneil.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Template\ShowTitleAndThumbneil.ascx.designer.cs">
+      <DependentUpon>ShowTitleAndThumbneil.ascx</DependentUpon>
     </Compile>
     <Compile Include="View.ascx.cs">
       <DependentUpon>View.ascx</DependentUpon>

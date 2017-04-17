@@ -74,9 +74,9 @@
             </dx:ASPxLabel>
         </td>
         <td>
-            <dx:ASPxMemo  ID="Description_ASPxMemo" runat="server" Width="300px" EnableTheming="True" Theme="Youthful" MaxLength="128" Rows="5">
+            <dx:ASPxTextBox  ID="Description_ASPxTextBox" runat="server" Width="300px" EnableTheming="True" Theme="Youthful" MaxLength="60px">
                
-            </dx:ASPxMemo>
+            </dx:ASPxTextBox>
         </td>
 
     </tr>

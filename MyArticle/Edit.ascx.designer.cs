@@ -112,13 +112,13 @@ namespace MyArticle {
         protected global::DevExpress.Web.ASPxLabel Description_ASPxLabel;
         
         /// <summary>
-        /// Description_ASPxMemo 控件。
+        /// Description_ASPxTextBox 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::DevExpress.Web.ASPxMemo Description_ASPxMemo;
+        protected global::DevExpress.Web.ASPxTextBox Description_ASPxTextBox;
         
         /// <summary>
         /// Thumbnail_ASPxLabel 控件。
