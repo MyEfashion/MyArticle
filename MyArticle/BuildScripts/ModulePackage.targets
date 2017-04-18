@@ -16,8 +16,10 @@
     <Copy SourceFiles="Admin.ascx" DestinationFolder="$(DestinationPath)"/>
     <Copy SourceFiles="Edit.ascx" DestinationFolder="$(DestinationPath)"/>
     <Copy SourceFiles="Detail.ascx" DestinationFolder="$(DestinationPath)"/>
+    <Copy SourceFiles="Template/OnlyShowTitle.ascx" DestinationFolder="$(DestinationPath)/Template"/>
+    <Copy SourceFiles="Template/ShowTitleAndThumbneil.ascx" DestinationFolder="$(DestinationPath)/Template"/>
     <Copy SourceFiles="MyArticleScript.js" DestinationFolder="$(DestinationPath)"/>
-    <Copy SourceFiles="Settings.ascx" DestinationFolder="$(DestinationPath)"/>
+    <Copy SourceFiles="Settings.ascx" DestinationFolder="$(DestinationPath)"/>          
     <Copy SourceFiles="App_LocalResources/View.ascx.resx"  DestinationFolder="$(DestinationPath)/App_LocalResources/"></Copy>
     <Copy SourceFiles="App_LocalResources/Edit.ascx.resx" DestinationFolder="$(DestinationPath)/App_LocalResources/"/>
     <Copy SourceFiles="App_LocalResources/Admin.ascx.resx" DestinationFolder="$(DestinationPath)/App_LocalResources/"/>

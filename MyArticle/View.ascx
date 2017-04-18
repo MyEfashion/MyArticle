@@ -9,6 +9,9 @@
     EnableTheming="True"
     Theme="Default">
     <SettingsTableLayout ColumnCount="1" />
+    <ItemTemplate>
+
+    </ItemTemplate>
 
     <PagerSettings ShowNumericButtons="False" Position="Bottom"></PagerSettings>
     <ItemStyle Border-BorderWidth="0px" Width="800px" Height="100px" />

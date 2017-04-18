@@ -29,19 +29,7 @@ namespace MyArticle
                     defaultPageSize = Convert.ToInt32(ModuleConfiguration.ModuleSettings["PageSize"].ToString());
                 }
 
-                if (ModuleConfiguration.ModuleSettings.Contains("DisplayStyle") && !string.IsNullOrEmpty(ModuleConfiguration.ModuleSettings["DisplayStyle"].ToString()))
-                {
-                    int style = Convert.ToInt32(ModuleConfiguration.ModuleSettings["DisplayStyle"].ToString());
 
-                    if (style == 0)
-                    {
-                        ArticleList_ASPxDataView.ItemTemplate = Page.LoadTemplate("DesktopModules/MyArticle/Template/OnlyShowTitle.ascx");
-                     }
-                    else
-                    {
-                        ArticleList_ASPxDataView.ItemTemplate = Page.LoadTemplate("DesktopModules/MyArticle/Template/ShowTitleAndThumbneil.ascx");
-                    }
-                }
 
                 if (ModuleContext.Configuration.Terms.Count > 0)
                 {
@@ -54,6 +42,21 @@ namespace MyArticle
 
                 Cache.Insert("ArticlesList" + ModuleContext.ModuleId, articles);     
 
+            }
+
+            if (ModuleConfiguration.ModuleSettings.Contains("DisplayStyle") && !string.IsNullOrEmpty(ModuleConfiguration.ModuleSettings["DisplayStyle"].ToString()))
+            {
+                int style = Convert.ToInt32(ModuleConfiguration.ModuleSettings["DisplayStyle"].ToString());
+
+                if (style == 0)
+                {
+
+                    ArticleList_ASPxDataView.ItemTemplate = Page.LoadTemplate("DesktopModules/MyArticle/Template/OnlyShowTitle.ascx");
+                }
+                else
+                {
+                    ArticleList_ASPxDataView.ItemTemplate = Page.LoadTemplate("DesktopModules/MyArticle/Template/ShowTitleAndThumbneil.ascx");
+                }
             }
 
             MyArticleDataBind();
